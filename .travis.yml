@@ -1,23 +1,5 @@
 language: java
 jdk:
-<<<<<<< Updated upstream
-  - openjdk11
-
-addons:
-  sonarcloud:
-    organization: "nafu-at-github"
-    token:
-      secure: "NuspFII3op+or6tl1uFvC+rolNx/vSy1MHLbJ0igxkLKaty6UVEzOlzrhF9m2a6FXn6+zuWFVaDUx+1vwAPA7zUzh70bTV2W9zyh529PkLgrJvEvzU6oZlx7XlXZFfQxJMtUNbGGpjV5gK9rIJFNXWTwFhdb+6pQ4VkT6h4Vkegc5AFgUbYUeJ05nreYYfqqlPjUqvJyk5OqQC7PHWyxY8O6wKZTGXHHFhR6kValeNrSJNx1W12PKpG5RGqoKPtRVT8xHs0zkFcfRceEblgVhAZ03cCOwyMkUd0Tfs/C9IIU1bpuhgU/b77/nF7iH7vgJ6rFJu7oOiMi8vPEUsfo7L3KyjL8RIH42VC1hsIUcuu9hnpfX7UgsPxsQLwOr7lQVpL51fDf7jlLiSolnq5rzw20Oc3Le+3ttzTKmvvma/yAsqZKGQBs9WmDKtgGVQznumJRCG58l3PibH2spTumQtcxdKm5KBG6MIorvrx8rIoTASQbALb5CaeiWR6V6nGc1YouSXhIkNQlKxB1W42sXO9wgtnSMJzIk2eiiBbhLCvquNlTIjERdfGu+3SVSL3y/Xv+uudqOySGcTxhEerON+eIu1uuOlWhjF9vmMxq/B+krOzGprFhVpwYFGRXLxIc0MwUZDMrl31oWZBPTuA/vz8eAUQQuxdIvrPS1qSZYQg="
-
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
-script:
-  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=nafu-at_SimpleJuke
-=======
   - openjdk8
   - openjdk10
   - openjdk11
->>>>>>> Stashed changes
