@@ -1,0 +1,59 @@
+##########################################################
+#    SimpleJukeをご利用いただきありがとうございます。      #
+#                    作成者: NAFU_at                     #
+#      コンフィグバージョン: v1.0.0L4                     #
+##########################################################
+
+###############################################
+#                基本的な設定                  #
+#  このBotを使用するにあたり必要な設定です。    #
+###############################################
+basic:
+  discordToken: "YourTokenHere"        # このBotのDiscordAPIとの通信に使用するトークンを指定します。
+
+  prefix: ";;"                         # このBotがメッセージをコマンドとして認識するための接頭辞を指定します。
+  botAdmins: []                        # このBotの管理権限を持つユーザーのIDを指定します。
+
+  musicSource:                         # 音楽の再生に使用するソースを指定します。
+    youtube:    true
+    soundcloud: true
+    bandcamp:   true
+    vimeo:      true
+    twitch:     true
+    http:       true
+    local:      false
+
+  database: # ギルド設定を保存するDatabaseの接続情報を指定します。
+    databaseType: "MARIADB"            # データベースの種類を指定します。 (MARIADB/MYSQL/SQLITE)
+    tablePrefix: "sj_"
+    address: localhost:3306            # SQLiteを使用する場合は保存したいファイルパスを指定してください。
+    database: SimpleJuke
+    username: SimpleJuke
+    password: PaSsWoRd
+
+
+######################################
+#            高度な設定               #
+#  設定すると便利な高度な設定です。    #
+######################################
+advanced:
+  googleAPIToken: ""                   # 入力することでYouTubeの動画検索機能が利用できます。
+  # Botのアップデート情報が配信されているアドレスを指定します。
+  updateInfoUrl: "https://raw.githubusercontent.com/kumanekosoft/SimpleJuke/dev"
+
+  useNodeServer: false                 # この設定を有効にするとオーディオの送信に負荷分散を利用します。
+
+  #nodesInfo:                          # 負荷分散に使用するノードサーバーの接続情報を指定します。
+  #  - nodeName: "local"               # ノードを管理するための識別名を指定します。
+  #    address: "ws://localhost:2333"  # ノードに接続するための接続先を指定します。
+  #    password: "node1Password"       # ノード側で設定した接続用のパスワードを指定します。
+  #
+  #  - nodeName: "network"
+  #    address: "ws://example.com:2333"
+  #    password: "node2Password"
+
+
+  # --- --- --- --- #
+  logLevel: INFO                       # ログに出力する情報の詳細レベルを指定します。
+
+version: 1.0.0L4

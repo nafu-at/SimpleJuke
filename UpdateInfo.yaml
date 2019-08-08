@@ -1,0 +1,130 @@
+versions:
+  - version: 0.0.0
+    title: バージョニングの変更を行いました。
+    description:
+      - "[x] バージョニングの変更に伴い更新機能の再構築を行いました。"
+      - "[x] お手数ですが最新版は各自でダウンロードして適用してください。"
+    download: ""
+    type: BETA
+
+  - version: 1.0.0-BETA-20190514
+    title: 文字数に関する不具合の修正。
+    description:
+      - "[x] 動画説明欄の内容が2000文字以上のある場合にエラーが発生する不具合を修正しました。"
+      - "[x] 2000文字以上のトレースが出力された場合にエラーが発生する不具合を修正しました。"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v1.0.0-BETA-20190514/SimpleJuke.jar"
+    type: BETA
+
+  - version: 1.0.0-BETA-20190512
+    title: VoiceChannelに関する不具合の修正。
+    description:
+      - "[x] ユーザーが抜けると他のユーザーが居ても退出してしまう不具合を修正しました。"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v1.0.0-BETA-20190512/SimpleJuke.jar"
+    type: BETA
+
+  - version: 1.0.0-BETA-20190511
+    title: バージョンをBETAにアップデート
+    description:
+      - "[x] バージョンをSNAPSHOTからBETAに更新しました。"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v1.0.0-BETA-20190511/SimpleJuke.jar"
+    type: BETA
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190511
+    title: Statusコマンドの実装
+    description:
+      - "[x] Statusコマンドを実装しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190510
+    title: ライブラリのバージョンアップ
+    description:
+      - "[x] ライブラリのバージョンをバージョンアップしました。"
+      - "[x] 起動時にPing表示が-1になる不具合を修正しました。"
+      - "[x] Updateコマンドでサーバーから自動的にファイルを取得して更新する機能を追加しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190501
+    title: モジュール機能の実装
+    description:
+      - "[x] Seekコマンドを実装しました。"
+      - "[x] MotModuleを実装しました。"
+      - "[x] ModuleInfoコマンドを実装しました。"
+      - "[x] UpdateInfoコマンドを実装しました。"
+      - "[x] Updateを取得するサーバーを指定する設定を追加しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190429
+    title: ボイスチャンネルからの退出機能に関する変更
+    description:
+      - "[x] 他のBotがボイスチャンネルに残っている場合でも退出するようにしました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190427
+    title: Embed表示の強化
+    description:
+      - "[x] YouTube以外のソースのNowPlayingのEmbed表示に対応しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190426
+    title: 音楽再生機能関連の強化
+    description:
+      - "[x] 音楽の再生ソースの有効無効に関する設定を実装しました。"
+      - "[x] アップデート時にファイルに変更があるかを確認するようにしました。"
+      - "[x] 添付ファイルからアップデートをできるようにしました。"
+      - "[x] Playコマンドを添付ファイル付きで実行すると添付ファイルが再生されるようにしました。"
+      - "[x] ボイスチャンネルに誰も居なくなった場合に一時停止して退出するようにしました。"
+      - "[x] BotFileUpdateコマンドが使用できない不具合を修正しました。"
+      - "[x] 生成されるログファイルの名前が正しくない不具合を修正しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190425
+    title: ギルド設定機能関連の強化
+    description:
+      - "[x] データベースを使用しないようにする設定を追加しました。 (1.0.0S2 -> 1.0.0S3)"
+      - "[x] 次の曲が再生される際にメッセージが出るようにしました。"
+      - "[x] Configコマンドを実装しました。"
+      - "[x] preifxを変更できるようにしました。"
+      - "[x] 再生開始アナウンスの有無を切り替えられるようにしました。"
+      - "[x] キューリストで表示するトラック数を変更できるようにしました。"
+      - "[x] SQLへの設定の保存に失敗した場合にギルドにメッセージを送るようにしました。"
+      - "[x] キューが空の状態でShuffleコマンドを実行するとエラーが出る不具合を修正しました。"
+      - "[x] 未使用クラスを削除しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190424
+    title: コントロールコマンド関連の強化
+    description:
+      - "[x] オーディオパケット送信システムのネイティブライブラリに対応させました。"
+      - "[x] ネイティブライブラリの使用に関する設定項目を追加しました。 (1.0.0S -> 1.0.0S2)"
+      - "[x] Skipコマンドのオプションを追加しました。"
+      - "[x] 番号を指定してスキップできるようにしました。"
+      - "[x] 範囲を指定してスキップできるようにしました。"
+      - "[x] Requeueコマンドを実装しました。"
+      - "[x] Interruptコマンドを実装しました。"
+      - "[x] Shuffleの設定が保存されない不具合を修正しました。"
+      - "[x] シャッフル状態で曲を追加するとキューメッセージがズレる不具合を修正しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190423
+    title: プレイリストロード機能の実装
+    description:
+      - "[x] キュー一覧に登録者と再生時間を表示するようにしました。"
+      - "[x] プレイリストのロードに対応しました。"
+    download: ""
+    type: NIGHTLY
+
+  - version: 1.0.0-SNAPSHOT-BUILD20190422
+    title: Embed表示の実装
+    description:
+      - "[x] YouTube動画用のNowPlaying Embedを実装しました。"
+      - "[x] シャッフルに問題が発生する不具合を修正しました。"
+    download: ""
+    type: NIGHTLY

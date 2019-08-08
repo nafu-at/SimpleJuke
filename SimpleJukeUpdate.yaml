@@ -1,0 +1,131 @@
+versions:
+  - version: 0.1.0
+    title: データベース関連の大幅な仕様変更
+    description:
+      - "**このバージョンはそれ以前のバージョンとの互換性はありません。**"
+      - "**このバージョンを使用するにはデータベースをリセットする必要があります。**"
+      - "**詳しくはこちらの変更履歴を御覧ください。**"
+      - "https://github.com/kumanekosoft/SimpleJuke/blob/dev/DevlopmentStatus.md"
+    knownbugs: []
+    updatedate: "2019-07-20 00:00"
+    download: ""
+    level: BETA
+
+  - version: 0.0.8
+    title: 軽微なバグの修正とコマンド機能の強化
+    description:
+      - "Goole API Tokenが設定されていない時にエラーが出る不具合を修正しました。"
+      - "更新情報の取得前に更新の確認を実行するとエラーが発生する不具合を修正しました。"
+      - "ReShuffleコマンドを実行した時にメッセージを出すようにしました。"
+      - "Bot宛のメンションをコマンドとして認識するようにしました。"
+    knownbugs: []
+    updatedate: "2019-06-08 19:00"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v0.0.8/SimpleJuke.jar"
+    level: BETA
+
+  - version: 0.0.7
+    title: ギルド固有の設定の追加
+    description:
+      - "ReShuffleコマンドを実装しました。"
+      - "YouTube検索機能を実装しました。"
+      - "自動退出機能をを設定で無効にできるようにしました。"
+      - "Configコマンドでキューサイズを変更する際にListRangeを使えるようにしました。"
+    knownbugs: []
+    updatedate: "2019-06-08 15:00"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v0.0.7/SimpleJuke.jar"
+    level: BETA
+
+  - version: 0.0.7-Nightly.2
+    title: ギルド固有の設定の追加
+    description:
+      - "ReShuffleコマンドを実装しました。"
+      - "YouTube検索機能を実装しました。"
+    knownbugs: []
+    updatedate: "2019-06-07 15:50"
+    download: ""
+    level: NIGHTLY
+
+  - version: 0.0.7-Nightly.1
+    title: ギルド固有の設定の追加
+    description:
+      - "自動退出機能をを設定で無効にできるようにしました。"
+      - "Configコマンドでキューサイズを変更する際にListRangeを使えるようにしました。"
+    knownbugs: []
+    updatedate: "2019-06-06 00:30"
+    download: ""
+    level: NIGHTLY
+
+  - version: 0.0.6
+    title: 軽微なバグの修正と機能強化
+    description:
+      - "キューが空になるとエラーが出る不具合を修正しました。"
+      - "UpdateInfoコマンドでDescriptionの欄に空白が生成される不具合を修正しました。"
+      - "Updateコマンド実行時に更新レベルを指定しない場合最新版であっても更新される不具合を修正しました。"
+      - "ログファイルをアーカイブする際に圧縮するようにしました。"
+      - "更新情報を一定周期で自動更新するようにしました。"
+    knownbugs: []
+    updatedate: "2019-05-31 16:00"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v0.0.6/SimpleJuke.jar"
+    level: BETA
+
+  - version: 0.0.5
+    title: Statusコマンドの機能強化とバグ修正
+    description:
+      - "Statusコマンドで表示できる項目を追加しました。"
+      - "Listコマンドの「▶」が絵文字にならないようにしました。"
+    knownbugs:
+      - "一時停止に関するメッセージが出ない不具合"
+    updatedate: "2019-05-28 09:00"
+    download: "https://github.com/kumanekosoft/SimpleJuke/releases/download/v0.0.5/SimpleJuke.jar"
+    level: BETA
+
+  - version: 0.0.4
+    title: メッセージ関連のバグの修正
+    description:
+      - "KnownBugsが設定されていない更新でも項目が表示される不具合を修正しました。"
+      - "再生や停止時にも一時停止のメッセージが出てしまう不具合を修正しました。"
+    knownbugs: []
+    updatedate: "2019-05-25 14:05"
+    download: ""
+    level: NIGHTLY
+
+  - version: 0.0.3
+    title: 再生機能に関するバグ修正と動作仕様の変更
+    description:
+      - "プレイヤーがチャンネルから移動して空になった場合に曲が止まらない不具合を修正しました。"
+      - "1曲リピート時に2回以降エラーが発生する不具合の修正しました。"
+      - "1曲リピート時にSkipを実行しても次の曲に変わらない不具合を修正しました。"
+      - "全曲リピート時にSkipを実行しても再追加されないうようにしました。"
+      - "Playコマンドで一時停止を解除した場合にもメッセージを表示するようにしました。"
+      - "メッセージの誤字を修正しました。"
+    knownbugs: []
+    updatedate: "2019-05-20 18:50"
+    download: ""
+    level: NIGHTLY
+
+  - version: 0.0.2
+    title: 軽微なバグの修正
+    description:
+      - "何も再生していない状態でNowPlayingコマンドを実行するとエラーが発生する不具合を修正しました。"
+    knownbugs:
+      - "1曲リピート時に2回以降エラーが発生する不具合"
+      - "プレイヤーがチャンネルから移動して空になった場合に曲が止まらない"
+    updatedate: "2019-05-20 01:00"
+    download: ""
+    level: NIGHTLY
+
+  - version: 0.0.1
+    title: バージョニングの変更と大型のアップデート
+    description:
+      - "バージョニングを変更しました。"
+      - "UpdateInfoコマンドで表示する内容を最新の1つのみに変更しました。"
+      - "UpdateInfoコマンドで表示するアップデートレベルを指定できるようにしました。"
+      - "Updateコマンドで更新するアップデートレベルを指定できるようにしました。"
+      - "動画説明欄の内容が長い場合にエラーが発生する不具合を修正しました。"
+    knownbugs:
+      - "プレイヤーがチャンネルから移動して空になった場合に曲が止まらない"
+      - "何も再生していない状態でNowPlayingコマンドを実行するとエラーが発生する"
+      - "1曲リピート時に2回以降エラーが発生する不具合"
+    updatedate: "2019-05-19 03:15"
+    download: ""
+    level: NIGHTLY
