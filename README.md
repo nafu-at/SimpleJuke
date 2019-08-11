@@ -1,4 +1,5 @@
 # SimpleJuke
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1d61ea339bf4885b4feb6dfa79e3b30)](https://app.codacy.com/app/NAFU_at/SimpleJuke?utm_source=github.com&utm_medium=referral&utm_content=nafu-at/SimpleJuke&utm_campaign=Badge_Grade_Dashboard)
 ![GitHub release](https://img.shields.io/github/release/nafu-at/SimpleJuke.svg) ![GitHub release](https://img.shields.io/github/release-pre/nafu-at/SimpleJuke.svg) ![GitHub](https://img.shields.io/github/license/nafu-at/SimpleJuke.svg) [![Build Status](https://travis-ci.com/nafu-at/SimpleJuke.svg?branch=dev)](https://travis-ci.com/nafu-at/SimpleJuke)
 
 SimpleJukeはDiscordユーザー向けの音楽再生用Botです。  
