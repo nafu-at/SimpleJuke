@@ -28,7 +28,7 @@ import dev.pandasoft.simplejuke.database.UserDataTableManager;
 import dev.pandasoft.simplejuke.database.entities.GuildSettingsManager;
 import dev.pandasoft.simplejuke.database.entities.UserDataManager;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
-import dev.pandasoft.simplejuke.discord.command.CommandRegistry;
+import dev.pandasoft.simplejuke.discord.command.CommandManager;
 import dev.pandasoft.simplejuke.discord.command.executor.admin.ShutdownCommand;
 import dev.pandasoft.simplejuke.discord.command.executor.admin.UpdateCommand;
 import dev.pandasoft.simplejuke.discord.command.executor.admin.UpdateInfoCommand;
@@ -46,7 +46,9 @@ import dev.pandasoft.simplejuke.discord.handler.GuildVoiceUpdateEventHandler;
 import dev.pandasoft.simplejuke.discord.handler.MessageReceivedEventHandler;
 import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
 import dev.pandasoft.simplejuke.modules.ModuleManager;
+import dev.pandasoft.simplejuke.modules.ModuleRegistry;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
+import io.sentry.Sentry;
 import lavalink.client.io.jda.JdaLavalink;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
@@ -74,8 +76,9 @@ public class BotBuilder {
     protected DefaultShardManagerBuilder shardManagerBuilder = null;
     protected JdaLavalink lavalink = null;
 
-    protected CommandRegistry commandRegistry = null;
+    protected CommandManager commandManager = null;
     protected AudioPlayerRegistry playerRegistry = null;
+    protected ModuleRegistry moduleRegistry;
     protected ModuleManager moduleManager = null;
     protected StateUpdateAgent updateAgent = null;
 
@@ -146,13 +149,18 @@ public class BotBuilder {
         return this;
     }
 
-    public BotBuilder setCommandRegistry(CommandRegistry commandRegistry) {
-        this.commandRegistry = commandRegistry;
+    public BotBuilder setCommandManager(CommandManager commandManager) {
+        this.commandManager = commandManager;
         return this;
     }
 
     public BotBuilder setPlayerRegistry(AudioPlayerRegistry playerRegistry) {
         this.playerRegistry = playerRegistry;
+        return this;
+    }
+
+    public BotBuilder setModuleRegistry(ModuleRegistry moduleRegistry) {
+        this.moduleRegistry = moduleRegistry;
         return this;
     }
 
@@ -186,8 +194,15 @@ public class BotBuilder {
         jdaLogger.setLevel(level);
         cpLogger.setLevel(level);
 
+        if (!config.getAdvancedConfig().getSentryDsn().isEmpty()) {
+            Sentry.init(config.getAdvancedConfig().getSentryDsn());
+        }
+
+        if (moduleRegistry == null)
+            moduleRegistry = new ModuleRegistry();
+
         if (moduleManager == null)
-            moduleManager = new ModuleManager(this);
+            moduleManager = new ModuleManager(moduleRegistry, "modules");
         moduleManager.loadAllModules();
         log.info("BotModule Loading... OK!");
 
@@ -263,11 +278,11 @@ public class BotBuilder {
                 shardManager.getShardById(0).getPing());
         log.info("Discord API Login... OK!");
 
-        if (commandRegistry == null) {
-            commandRegistry = new CommandRegistry();
+        if (commandManager == null) {
+            commandManager = new CommandManager(moduleRegistry);
         }
 
-        getDefaultCommands().forEach(executor -> commandRegistry.registerCommand(executor, null));
+        getDefaultCommands().forEach(executor -> commandManager.getCommandRegistry(null).registerCommand(executor));
 
         if (playerRegistry == null) {
             playerRegistry = new AudioPlayerRegistry(new DefaultAudioPlayerManager());
@@ -281,6 +296,6 @@ public class BotBuilder {
         }
 
         return new BotController(config, databaseConnector, guildSettingsManager, userDataManager, shardManager,
-                lavalink, commandRegistry, playerRegistry, moduleManager, updateAgent);
+                lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent);
     }
 }

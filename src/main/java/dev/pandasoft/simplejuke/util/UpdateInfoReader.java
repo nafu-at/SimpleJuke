@@ -16,6 +16,8 @@
 
 package dev.pandasoft.simplejuke.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.util.update.UpdateInfo;
 import dev.pandasoft.simplejuke.util.update.VersionInfo;
@@ -23,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -42,12 +43,16 @@ public class UpdateInfoReader {
         infoUrl = serverUrl + "/SimpleJukeUpdate.yaml";
     }
 
+    public static String getNowVersion() {
+        return VERSION;
+    }
+
     protected void loadUpdateInfo() {
         Request request = new Request.Builder().url(infoUrl).build();
         try (Response response = client.newCall(request).execute()) {
             String result = response.body().string();
-            Yaml yaml = new Yaml();
-            updateInfo = yaml.loadAs(result, UpdateInfo.class);
+            ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+            updateInfo = mapper.readValue(result, UpdateInfo.class);
         } catch (IOException e) {
             log.error("更新情報の取得中にエラーが発生しました。", e);
         }
@@ -68,9 +73,9 @@ public class UpdateInfoReader {
             return false;
 
         for (VersionInfo versionInfo : updateInfo.getVersions()) {
-            if (versionInfo.level.getLevel() >= level)
+            if (versionInfo.getLevel().getLevel() >= level)
                 latestVersion = versionInfo;
-            if (versionInfo.version.equals(VERSION))
+            if (versionInfo.getLevel().equals(VERSION))
                 nowVersion = versionInfo;
         }
 
@@ -92,10 +97,6 @@ public class UpdateInfoReader {
                 versionInfoList.add(versionInfo);
         });
         return versionInfoList;
-    }
-
-    public static String getNowVersion() {
-        return VERSION;
     }
 }
 

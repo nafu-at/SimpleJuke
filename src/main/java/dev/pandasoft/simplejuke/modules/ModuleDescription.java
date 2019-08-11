@@ -14,26 +14,34 @@
  * limitations under the License.
  */
 
-package dev.pandasoft.simplejuke.modules.meta;
+package dev.pandasoft.simplejuke.modules;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class ModuleDescription {
-
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("version")
     private String version;
+    @JsonProperty(("description"))
     private String description;
+    @JsonProperty("authors")
     private List<String> authors;
+    @JsonProperty("website")
     private String website;
 
+    @JsonProperty("main")
     private String main;
+    @JsonProperty("dependency")
     private List<String> dependency;
+    @JsonProperty("loadBefore")
     private List<String> loadBefore;
+    @JsonProperty("requiredVersion")
     private String requiredVersion;
 
     /**
-     * モジュールの名前を取得します。
-     *
      * @return モジュールの名前
      */
     public String getName() {
@@ -41,8 +49,6 @@ public class ModuleDescription {
     }
 
     /**
-     * モジュールのバージョンを取得します。
-     *
      * @return モジュールのバージョン
      */
     public String getVersion() {
@@ -50,8 +56,6 @@ public class ModuleDescription {
     }
 
     /**
-     * モジュールの説明を取得します。
-     *
      * @return モジュールの説明
      */
     public String getDescription() {
@@ -59,8 +63,6 @@ public class ModuleDescription {
     }
 
     /**
-     * モジュールの製作者を取得します。
-     *
      * @return モジュールの製作者
      */
     public List<String> getAuthors() {
@@ -68,8 +70,6 @@ public class ModuleDescription {
     }
 
     /**
-     * モジュールの製作者のウェブサイトを取得します。
-     *
      * @return モジュールの製作者のウェブサイト
      */
     public String getWebsite() {
@@ -77,8 +77,6 @@ public class ModuleDescription {
     }
 
     /**
-     * モジュールのメインクラスを取得します。
-     *
      * @return モジュールのメインクラス
      */
     public String getMain() {
@@ -86,8 +84,6 @@ public class ModuleDescription {
     }
 
     /**
-     * このモジュールが必要とする他のモジュールのリストを取得します。
-     *
      * @return このモジュールが必要とする他のモジュール
      */
     public List<String> getDependency() {
@@ -95,8 +91,6 @@ public class ModuleDescription {
     }
 
     /**
-     * このモジュールがロードされる前にロードするべきモジュールのリストを取得します。
-     *
      * @return このモジュールがロードされる前にロードするべきモジュール
      */
     public List<String> getLoadBefore() {
@@ -104,47 +98,9 @@ public class ModuleDescription {
     }
 
     /**
-     * このモジュールが必要とするButtonBotNextの最低バージョンを取得します。
-     *
-     * @return このモジュールが必要とするButtonBotNextの最低バージョン
+     * @return このモジュールが必要とするSimpleJuke Coreの最低バージョン
      */
     public String getRequiredVersion() {
         return requiredVersion;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public void setMain(String main) {
-        this.main = main;
-    }
-
-    public void setDependency(List<String> dependency) {
-        this.dependency = dependency;
-    }
-
-    public void setLoadBefore(List<String> loadBefore) {
-        this.loadBefore = loadBefore;
-    }
-
-    public void setRequiredVersion(String requiredVersion) {
-        this.requiredVersion = requiredVersion;
     }
 }

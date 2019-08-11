@@ -16,10 +16,13 @@
 
 package dev.pandasoft.simplejuke.util.update;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class UpdateInfo {
-    public List<VersionInfo> versions;
+    @JsonProperty("versions")
+    private List<VersionInfo> versions;
 
     public List<VersionInfo> getVersions() {
         return versions;

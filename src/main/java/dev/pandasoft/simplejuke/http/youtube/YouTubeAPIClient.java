@@ -30,10 +30,9 @@ import java.util.Objects;
 
 @Slf4j
 public class YouTubeAPIClient {
-    private static final String YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search";
     public static final String YOUTUBE_VIDEO = "https://www.googleapis.com/youtube/v3/videos";
     public static final String YOUTUBE_CHANNEL = "https://www.googleapis.com/youtube/v3/channels";
-
+    private static final String YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search";
     private final OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
     public YouTubeSearchResults searchVideos(@NonNull String query) throws IOException {

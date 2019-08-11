@@ -39,21 +39,21 @@ public class ModuleCommand extends CommandExecutor {
 
     @Override
     public void onInvoke(BotCommand command) {
+        ModuleRegistry moduleRegistry = Main.getController().getModuleRegistry();
         if (command.getArgs().length >= 1) {
             try {
                 BotModule module;
                 switch (command.getArgs()[0].toLowerCase()) {
                     case "enable":
-                        module = ModuleRegistry.getModule(command.getArgs()[1]);
+                        module = moduleRegistry.getModule(command.getArgs()[1]);
                         if (module == null) {
                             String filename = command.getArgs()[1];
                             if (!filename.contentEquals(".jar")) {
                                 filename += ".jar";
                             }
                             if (Main.getController().getModuleManager().loadModule(new File(filename))) {
-                                module = ModuleRegistry.getModule(command.getArgs()[1]);
-                            }
-                            else {
+                                module = moduleRegistry.getModule(command.getArgs()[1]);
+                            } else {
                                 return;
                             }
                         }
@@ -62,7 +62,7 @@ public class ModuleCommand extends CommandExecutor {
                         break;
 
                     case "disable":
-                        module = ModuleRegistry.getModule(command.getArgs()[1]);
+                        module = moduleRegistry.getModule(command.getArgs()[1]);
                         if (module != null) {
                             Main.getController().getModuleManager().disableModule(module);
                             command.getChannel().sendMessage(module.getDescription().getName() + "を無効化しました。").queue();

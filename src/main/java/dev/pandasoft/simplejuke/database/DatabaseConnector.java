@@ -20,10 +20,11 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import dev.pandasoft.simplejuke.config.DatabaseType;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DatabaseConnector {
+public class DatabaseConnector implements Closeable {
     private HikariDataSource dataSource;
 
     public DatabaseConnector(DatabaseType databaseType, String address, String database, String username,

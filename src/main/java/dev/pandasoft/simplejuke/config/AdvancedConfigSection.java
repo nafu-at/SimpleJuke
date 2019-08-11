@@ -26,6 +26,7 @@ public class AdvancedConfigSection {
     private boolean useNodeServer;
     private List<LavalinkConfigSection> nodesInfo;
     private String logLevel;
+    private String sentryDsn;
 
     @JsonProperty("googleAPIToken")
     public String getGoogleAPIToken() {
@@ -52,6 +53,11 @@ public class AdvancedConfigSection {
         return logLevel;
     }
 
+    @JsonProperty("sentryDsn")
+    public String getSentryDsn() {
+        return sentryDsn;
+    }
+
     @Override
     public String toString() {
         return "AdvancedConfigSection{" +
@@ -60,6 +66,7 @@ public class AdvancedConfigSection {
                 ", useNodeServer=" + useNodeServer +
                 ", nodesInfo=" + nodesInfo +
                 ", logLevel='" + logLevel + '\'' +
+                ", sentryDsn='" + sentryDsn + '\'' +
                 '}';
     }
 }

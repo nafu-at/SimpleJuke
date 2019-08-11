@@ -21,8 +21,9 @@ import dev.pandasoft.simplejuke.config.SimpleJukeConfig;
 import dev.pandasoft.simplejuke.database.DatabaseConnector;
 import dev.pandasoft.simplejuke.database.entities.GuildSettingsManager;
 import dev.pandasoft.simplejuke.database.entities.UserDataManager;
-import dev.pandasoft.simplejuke.discord.command.CommandRegistry;
+import dev.pandasoft.simplejuke.discord.command.CommandManager;
 import dev.pandasoft.simplejuke.modules.ModuleManager;
+import dev.pandasoft.simplejuke.modules.ModuleRegistry;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import dev.pandasoft.simplejuke.util.UpdateInfoReader;
 import lavalink.client.io.jda.JdaLavalink;
@@ -37,25 +38,27 @@ public class BotController {
     protected final ShardManager shardManager;
     protected final JdaLavalink lavalink;
 
-    protected final CommandRegistry commandRegistry;
+    protected final CommandManager commandManager;
     protected final AudioPlayerRegistry playerRegistry;
+    protected final ModuleRegistry moduleRegistry;
     protected final ModuleManager moduleManager;
     protected final StateUpdateAgent updateAgent;
     protected final UpdateInfoReader infoReader;
 
     protected BotController(SimpleJukeConfig config, DatabaseConnector sqlConnector,
                             GuildSettingsManager guildSettingsManager, UserDataManager userDataManager,
-                            ShardManager shardManager, JdaLavalink lavalink, CommandRegistry commandRegistry,
-                            AudioPlayerRegistry playerRegistry, ModuleManager moduleManager,
-                            StateUpdateAgent updateAgent) {
+                            ShardManager shardManager, JdaLavalink lavalink, CommandManager commandManager,
+                            AudioPlayerRegistry playerRegistry, ModuleRegistry moduleRegistry,
+                            ModuleManager moduleManager, StateUpdateAgent updateAgent) {
         this.config = config;
         this.databaseConnector = sqlConnector;
         this.guildSettingsManager = guildSettingsManager;
         this.userDataManager = userDataManager;
         this.shardManager = shardManager;
         this.lavalink = lavalink;
-        this.commandRegistry = commandRegistry;
+        this.commandManager = commandManager;
         this.playerRegistry = playerRegistry;
+        this.moduleRegistry = moduleRegistry;
         this.moduleManager = moduleManager;
         this.updateAgent = updateAgent;
         this.infoReader = new UpdateInfoReader(config.getAdvancedConfig().getUpdateInfoUrl());
@@ -85,12 +88,16 @@ public class BotController {
         return lavalink;
     }
 
-    public CommandRegistry getCommandRegistry() {
-        return commandRegistry;
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 
     public AudioPlayerRegistry getPlayerRegistry() {
         return playerRegistry;
+    }
+
+    public ModuleRegistry getModuleRegistry() {
+        return moduleRegistry;
     }
 
     public ModuleManager getModuleManager() {

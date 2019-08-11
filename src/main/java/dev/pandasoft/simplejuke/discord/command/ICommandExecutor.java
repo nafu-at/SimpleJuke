@@ -21,15 +21,11 @@ import java.util.List;
 public interface ICommandExecutor {
 
     /**
-     * 登録されたコマンドの名前を返します。
-     *
      * @return 登録されたコマンドの名前
      */
     String getName();
 
     /**
-     * 関連付けられたエイリアスを返します。
-     *
      * @return 関連付けられたエイリアス
      */
     List<String> getAliases();
@@ -37,21 +33,16 @@ public interface ICommandExecutor {
     /**
      * コマンドを実行します。
      *
-     * @param command
-     * @return コマンドの実行結果
+     * @param command 実行時に使用するコマンドコンテキスト
      */
     void onInvoke(BotCommand command);
 
     /**
-     * コマンドに関するヘルプを返します。
-     *
      * @return コマンドに関するヘルプ
      */
     String help();
 
     /**
-     * このコマンドを実行するために必要な権限を返します。
-     *
      * @return このコマンドを実行するために必要な権限
      */
     CommandPermission getPermission();

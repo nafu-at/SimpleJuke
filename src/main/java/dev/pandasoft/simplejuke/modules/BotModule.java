@@ -16,11 +16,10 @@
 
 package dev.pandasoft.simplejuke.modules;
 
-import dev.pandasoft.simplejuke.BotBuilder;
 import dev.pandasoft.simplejuke.BotController;
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
-import dev.pandasoft.simplejuke.modules.meta.ModuleDescription;
+import dev.pandasoft.simplejuke.discord.command.CommandRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,18 +28,18 @@ import java.io.InputStream;
 import java.util.List;
 
 public abstract class BotModule implements Module {
-    private ClassLoader classLoader;
+    private final ClassLoader classLoader;
+    private final CommandRegistry commandRegistry;
     private ModuleDescription description;
     private File dataFolder;
     private Logger logger;
-    private BotBuilder builder;
-
 
     public BotModule() {
         classLoader = this.getClass().getClassLoader();
         if (!(classLoader instanceof ModuleClassLoader))
             throw new IllegalStateException("モジュールは" + ModuleClassLoader.class.getName() + "で読み込まれている必要があります。");
         ((ModuleClassLoader) classLoader).initialize(this);
+        commandRegistry = new CommandRegistry();
     }
 
     @Override
@@ -57,7 +56,7 @@ public abstract class BotModule implements Module {
 
     @Override
     public void registerCommand(CommandExecutor executor) {
-        getController().getCommandRegistry().registerCommand(executor, this);
+        commandRegistry.registerCommand(executor);
     }
 
     @Override
@@ -67,12 +66,17 @@ public abstract class BotModule implements Module {
 
     @Override
     public void removeCommand(CommandExecutor executor) {
-        getController().getCommandRegistry().removeCommand(executor, this);
+        commandRegistry.removeCommand(executor);
     }
 
     @Override
     public void removeCommands() {
-        getController().getCommandRegistry().removeCommands(this);
+        commandRegistry.removeCommands();
+    }
+
+    @Override
+    public CommandRegistry getCommandRegistry() {
+        return commandRegistry;
     }
 
     @Override
@@ -107,18 +111,9 @@ public abstract class BotModule implements Module {
         return logger;
     }
 
-    /**
-     * このメソッドで取得したBotBuilderに登録されている値を変更することによりBotの動作をカスタムすることができます。
-     * 取得したBuilderはonLoadメソッド内でのみ使用できそれ以降で行われた変更は適用されません。
-     */
-    protected BotBuilder getBotBuilder() {
-        return builder;
-    }
-
-    final void init(ModuleDescription description, BotBuilder builder) {
+    final void init(ModuleDescription description) {
         this.description = description;
         dataFolder = new File("modules/", description.getName());
         logger = LoggerFactory.getLogger(description.getName());
-        this.builder = builder;
     }
 }

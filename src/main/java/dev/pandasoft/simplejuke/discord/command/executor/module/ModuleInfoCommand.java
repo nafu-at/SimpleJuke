@@ -16,12 +16,13 @@
 
 package dev.pandasoft.simplejuke.discord.command.executor.module;
 
+import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.modules.BotModule;
+import dev.pandasoft.simplejuke.modules.ModuleDescription;
 import dev.pandasoft.simplejuke.modules.ModuleRegistry;
-import dev.pandasoft.simplejuke.modules.meta.ModuleDescription;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
@@ -35,15 +36,16 @@ public class ModuleInfoCommand extends CommandExecutor {
 
     @Override
     public void onInvoke(BotCommand command) {
+        ModuleRegistry moduleRegistry = Main.getController().getModuleRegistry();
         if (command.getArgs().length == 0) {
             StringBuilder builder = new StringBuilder();
-            List<BotModule> modules = ModuleRegistry.getModules();
+            List<BotModule> modules = moduleRegistry.getModules();
             builder.append(modules.size() + "個のモジュールがロードされています。\n```");
             modules.forEach(module -> builder.append(module.getDescription().getName() + " : v" + module.getDescription().getVersion()));
             builder.append("```");
             command.getChannel().sendMessage(builder.toString()).queue();
         } else {
-            BotModule module = ModuleRegistry.getModule(command.getArgs()[0]);
+            BotModule module = moduleRegistry.getModule(command.getArgs()[0]);
             if (module != null) {
                 ModuleDescription description = module.getDescription();
                 EmbedBuilder builder = new EmbedBuilder();

@@ -19,7 +19,7 @@ package dev.pandasoft.simplejuke.modules.exception;
 /**
  * 指定された依存関係が解決できない場合にスローされます。
  */
-public final class UnknownDependencyException extends Exception {
+public class UnknownDependencyException extends InvalidModuleException {
 
     public UnknownDependencyException() {
     }

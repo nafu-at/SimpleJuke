@@ -19,7 +19,7 @@ package dev.pandasoft.simplejuke.modules.exception;
 /**
  * 詳細情報が正しくないモジュールをロードしようとするとスローされます。
  */
-public final class InvalidDescriptionException extends Exception {
+public class InvalidDescriptionException extends InvalidModuleException {
 
     public InvalidDescriptionException() {
     }

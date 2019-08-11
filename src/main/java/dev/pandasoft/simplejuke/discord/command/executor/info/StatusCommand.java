@@ -32,6 +32,21 @@ public class StatusCommand extends CommandExecutor {
         super(name, aliases);
     }
 
+    private static String formatTime(long millis) {
+        long t = millis / 1000L;
+        int sec = (int) (t % 60L);
+        int min = (int) ((t % 3600L) / 60L);
+        int hrs = (int) (t / 3600L);
+
+        String timestamp;
+
+        if (hrs != 0)
+            timestamp = hrs + "時間 " + min + "分" + sec + "秒";
+        else
+            timestamp = min + "分" + sec + "秒";
+        return timestamp;
+    }
+
     @Override
     public void onInvoke(BotCommand command) {
         long max = Runtime.getRuntime().maxMemory() / 1048576L;
@@ -62,21 +77,6 @@ public class StatusCommand extends CommandExecutor {
         builder.append("```");
 
         command.getChannel().sendMessage(builder.toString()).queue();
-    }
-
-    private static String formatTime(long millis) {
-        long t = millis / 1000L;
-        int sec = (int) (t % 60L);
-        int min = (int) ((t % 3600L) / 60L);
-        int hrs = (int) (t / 3600L);
-
-        String timestamp;
-
-        if (hrs != 0)
-            timestamp = hrs + "時間 " + min + "分" + sec + "秒";
-        else
-            timestamp = min + "分" + sec + "秒";
-        return timestamp;
     }
 
     @Override

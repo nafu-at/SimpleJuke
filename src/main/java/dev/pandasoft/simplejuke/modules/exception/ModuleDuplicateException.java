@@ -19,7 +19,7 @@ package dev.pandasoft.simplejuke.modules.exception;
 /**
  * 同名のモジュールが既に登録されている場合にスローされます。
  */
-public final class ModuleDuplicateException extends Exception {
+public class ModuleDuplicateException extends Exception {
 
     public ModuleDuplicateException() {
     }

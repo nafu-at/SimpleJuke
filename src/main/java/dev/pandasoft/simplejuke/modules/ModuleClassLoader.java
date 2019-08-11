@@ -16,24 +16,22 @@
 
 package dev.pandasoft.simplejuke.modules;
 
-import dev.pandasoft.simplejuke.BotBuilder;
 import dev.pandasoft.simplejuke.modules.exception.InvalidModuleException;
-import dev.pandasoft.simplejuke.modules.meta.ModuleDescription;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
 public class ModuleClassLoader extends URLClassLoader {
-    private final BotBuilder builder;
     private final ModuleDescription description;
     private final BotModule module;
 
-    public ModuleClassLoader(File file, ModuleDescription description, ClassLoader parent, BotBuilder builder) throws MalformedURLException, InvalidModuleException {
+    protected ModuleClassLoader(File file, ModuleDescription description, ClassLoader parent) throws MalformedURLException,
+            InvalidModuleException {
         super(new URL[]{file.toURI().toURL()}, parent);
 
-        this.builder = builder;
         this.description = description;
 
         Class<?> jarClass;
@@ -51,11 +49,13 @@ public class ModuleClassLoader extends URLClassLoader {
 
 
         try {
-            module = moduleClass.newInstance();
-        } catch (InstantiationException e) {
+            module = moduleClass.getDeclaredConstructor().newInstance();
+        } catch (IllegalArgumentException | InstantiationException | NoSuchMethodException e) {
             throw new InvalidModuleException("モジュールの形式が正しくありません。");
         } catch (IllegalAccessException e) {
             throw new InvalidModuleException("コンストラクタがパブリックではありません。");
+        } catch (InvocationTargetException e) {
+            throw new InvalidModuleException("コンストラクタの初期化時にエラーが発生しました。", e);
         }
     }
 
@@ -64,6 +64,6 @@ public class ModuleClassLoader extends URLClassLoader {
     }
 
     public void initialize(BotModule module) {
-        module.init(description, builder);
+        module.init(description);
     }
 }

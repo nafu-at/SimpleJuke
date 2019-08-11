@@ -19,7 +19,7 @@ package dev.pandasoft.simplejuke.modules.exception;
 /**
  * 無効なモジュールファイルをロードしようとするとスローされます。
  */
-public final class InvalidModuleException extends Exception {
+public class InvalidModuleException extends Exception {
 
     public InvalidModuleException() {
     }

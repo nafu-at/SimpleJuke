@@ -50,8 +50,6 @@ public class BotCommand {
     }
 
     /**
-     * コマンドが実行されたギルドを返します。
-     *
      * @return コマンドが実行されたギルド
      */
     public Guild getGuild() {
@@ -59,8 +57,6 @@ public class BotCommand {
     }
 
     /**
-     * コマンドが実行されたテキストチャンネルを返します。
-     *
      * @return コマンドが実行されたテキストチャンネル
      */
     public TextChannel getChannel() {
@@ -68,17 +64,13 @@ public class BotCommand {
     }
 
     /**
-     * コマンドを実行したメンバーを返します。
-     *
-     * @return コマンドが実行されたメンバー
+     * @return コマンドを実行したメンバー
      */
     public Member getInvoker() {
         return invoker;
     }
 
     /**
-     * 実際に送信されたメッセージを返します。
-     *
      * @return 実際に送信されたメッセージ
      */
     public Message getMessage() {
@@ -86,8 +78,6 @@ public class BotCommand {
     }
 
     /**
-     * 送信されたコマンド名を返します。
-     *
      * @return 実行されたコマンド名
      */
     public String getTrigger() {
@@ -95,8 +85,6 @@ public class BotCommand {
     }
 
     /**
-     * 指定されたオプションを返します。
-     *
      * @return 指定されたオプション
      */
     public String[] getArgs() {
@@ -104,8 +92,6 @@ public class BotCommand {
     }
 
     /**
-     * 送信されたコマンド名に該当するコマンドクラスを返します。
-     *
      * @return 送信されたコマンド名に該当するコマンドクラス
      */
     public CommandExecutor getCommand() {

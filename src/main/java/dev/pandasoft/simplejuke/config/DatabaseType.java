@@ -21,13 +21,13 @@ public enum DatabaseType {
     MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://"),
     SQLITE("org.sqlite.JDBC", "jdbc:sqlite:");
 
+    private final String jdbcClass;
+    private final String addressPrefix;
+
     DatabaseType(String jdbcClass, String addressPrefix) {
         this.jdbcClass = jdbcClass;
         this.addressPrefix = addressPrefix;
     }
-
-    private final String jdbcClass;
-    private final String addressPrefix;
 
     public String getJdbcClass() {
         return jdbcClass;

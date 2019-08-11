@@ -16,6 +16,8 @@
 
 package dev.pandasoft.simplejuke.util.update;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,13 +26,20 @@ import java.util.List;
 public class VersionInfo {
     private final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    public String version;
-    public String title;
-    public List<String> description;
-    public List<String> knownbugs;
-    public String updatedate;
-    public String download;
-    public VersionType level;
+    @JsonProperty("version")
+    private String version;
+    @JsonProperty("title")
+    private String title;
+    @JsonProperty("description")
+    private List<String> description;
+    @JsonProperty("knownbugs")
+    private List<String> knownbugs;
+    @JsonProperty("updatedate")
+    private String updatedate;
+    @JsonProperty("download")
+    private String download;
+    @JsonProperty("level")
+    private VersionType level;
 
     public String getVersion() {
         return version;

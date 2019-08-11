@@ -16,13 +16,12 @@
 
 package dev.pandasoft.simplejuke.modules;
 
-import dev.pandasoft.simplejuke.BotBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import dev.pandasoft.simplejuke.modules.exception.InvalidDescriptionException;
 import dev.pandasoft.simplejuke.modules.exception.InvalidModuleException;
 import dev.pandasoft.simplejuke.modules.exception.UnknownDependencyException;
-import dev.pandasoft.simplejuke.modules.meta.ModuleDescription;
 import lombok.extern.slf4j.Slf4j;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,25 +32,41 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ModuleLoader {
-    private static final File dir = new File("modules");
-    private static final Yaml yaml = new Yaml();
-    private final BotBuilder builder;
+    private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+    private final ModuleRegistry moduleRegistry;
+    private final File dir;
 
-    public ModuleLoader(BotBuilder builder) {
-        this.builder = builder;
+    public ModuleLoader(ModuleRegistry moduleRegistry, String moduleDir) {
+        this.moduleRegistry = moduleRegistry;
+        this.dir = new File(moduleDir);
     }
 
+    /**
+     * モジュールフォルダに格納されているJARファイル一覧を取得します。<br>
+     * フォルダが存在しないかからの場合は空のListを返します。
+     *
+     * @return モジュールフォルダに格納されているJARファイル一覧
+     */
     public List<File> searchModules() {
         if (dir.exists())
-            return new ArrayList<>(Arrays.asList(dir.listFiles()));
+            return Arrays.stream(dir.listFiles()).filter(file -> file.getName().endsWith(".jar")).collect(Collectors.toList());
         else
             dir.mkdirs();
         return new ArrayList<>();
     }
 
+    /**
+     * 指定したファイルをモジュールとしてロードします。
+     *
+     * @param file ロードするモジュールファイル
+     * @return ロードされたモジュール
+     * @throws InvalidModuleException     モジュールの形式が正しくない場合にスローされます。
+     * @throws UnknownDependencyException 指定されている依存関係が解決できない場合にスローされます。
+     */
     public BotModule loadModule(File file) throws InvalidModuleException, UnknownDependencyException {
         if (!file.exists())
             throw new InvalidModuleException(file.getPath() + "は存在しません！");
@@ -71,14 +86,14 @@ public class ModuleLoader {
 
         if (description.getDependency() != null && !description.getDependency().isEmpty()) {
             for (String dep : description.getDependency()) {
-                if (ModuleRegistry.getModule(dep) == null)
+                if (moduleRegistry.getModule(dep) == null)
                     throw new UnknownDependencyException("依存関係が解決できませんでした。");
             }
         }
 
         ModuleClassLoader classLoader;
         try {
-            classLoader = new ModuleClassLoader(file, description, getClass().getClassLoader(), builder);
+            classLoader = new ModuleClassLoader(file, description, getClass().getClassLoader());
         } catch (MalformedURLException e) {
             throw new InvalidModuleException(e);
         }
@@ -86,6 +101,14 @@ public class ModuleLoader {
         return classLoader.getModule();
     }
 
+    /**
+     * モジュールに登録されている詳細情報を読み込みます。
+     *
+     * @param file 読み込むモジュールファイル
+     * @return 登録されている詳細情報
+     * @throws InvalidModuleException      モジュールの形式が正しくない場合にスローされます。
+     * @throws InvalidDescriptionException 指定されている依存関係が解決できない場合にスローされます。
+     */
     public ModuleDescription loadModuleDescription(File file) throws InvalidModuleException, InvalidDescriptionException {
         if (!file.exists())
             throw new InvalidModuleException(file.getPath() + "は存在しません！");
@@ -99,7 +122,7 @@ public class ModuleLoader {
                 throw new InvalidDescriptionException("module.yamlが見つかりませんでした。");
 
             inputStream = jar.getInputStream(entry);
-            return yaml.loadAs(inputStream, ModuleDescription.class);
+            return mapper.readValue(inputStream, ModuleDescription.class);
         } catch (IOException e) {
             throw new InvalidModuleException("モジュールをロードできませんでした。", e);
         } finally {

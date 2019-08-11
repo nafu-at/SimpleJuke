@@ -16,55 +16,50 @@
 
 package dev.pandasoft.simplejuke.discord.command;
 
-import dev.pandasoft.simplejuke.modules.BotModule;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CommandRegistry {
-    private final Map<BotModule, Map<String, CommandExecutor>> commands = new LinkedHashMap<>();
+    private final Map<String, CommandExecutor> commands = new LinkedHashMap<>();
 
     /**
      * コマンドを登録します。
      *
      * @param executor 登録するコマンドクラス
      */
-    public void registerCommand(CommandExecutor executor, BotModule module) {
-        Map executors = commands.computeIfAbsent(module, key -> new HashMap<>());
+    public void registerCommand(CommandExecutor executor) {
         String name = executor.getName();
-        executors.put(name, executor);
+        commands.put(name, executor);
         for (String alias : executor.getAliases())
-            executors.put(alias, executor);
-    }
-
-    /**
-     * モジュールに紐付けられたコマンドをすべて削除します。
-     *
-     * @param module 削除するコマンドに紐付けられたモジュール
-     */
-    public void removeCommands(BotModule module) {
-        commands.remove(module);
+            commands.put(alias, executor);
     }
 
     /**
      * モジュールに紐付けられた特定のコマンドを削除します。
      *
-     * @param name   コマンドの名前
-     * @param module 削除するコマンドに紐付けられたモジュール
+     * @param name コマンドの名前
      */
-    public void removeCommand(String name, BotModule module) {
-        commands.get(module).remove(name);
+    public void removeCommand(String name) {
+        commands.remove(name);
     }
 
     /**
      * モジュールに紐付けられた特定のコマンドを削除します。
      *
      * @param executor コマンド実行クラス
-     * @param module   削除するコマンドに紐付けられたモジュール
      */
-    public void removeCommand(CommandExecutor executor, BotModule module) {
-        commands.get(module).remove(executor.getName());
+    public void removeCommand(CommandExecutor executor) {
+        commands.remove(executor.getName());
         executor.getAliases().forEach(commands::remove);
+    }
+
+    /**
+     * モジュールに紐付けられたコマンドをすべて削除します。
+     */
+    public void removeCommands() {
+        commands.clear();
     }
 
     /**
@@ -73,9 +68,7 @@ public class CommandRegistry {
      * @return 登録されている全てのコマンド
      */
     public List<CommandExecutor> getCommands() {
-        List<CommandExecutor> list = new ArrayList<>();
-        commands.entrySet().forEach(entry -> list.addAll(entry.getValue().values()));
-        return list.stream().distinct().collect(Collectors.toList());
+        return new ArrayList<>(commands.values());
     }
 
     /**
@@ -85,13 +78,6 @@ public class CommandRegistry {
      * @return 対応するコマンドクラス
      */
     public CommandExecutor getExecutor(String name) {
-        List<Map.Entry<BotModule, Map<String, CommandExecutor>>> modules = new ArrayList(commands.entrySet());
-        CommandExecutor executor = modules.get(0).getValue().get(name);
-        for (int i = commands.size() - 1; i > 0; i--) {
-            if (executor != null)
-                break;
-            executor = modules.get(i).getValue().get(name);
-        }
-        return executor;
+        return commands.get(name);
     }
 }

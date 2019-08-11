@@ -34,7 +34,7 @@ public class HelpCommand extends CommandExecutor {
             command.getChannel().sendMessage(
                     HELP_MESSAGE.replaceAll("%prefix%", Main.getController().getConfig().getBasicConfig().getPrefix())).queue();
         } else {
-            CommandExecutor executor = Main.getController().getCommandRegistry().getExecutor(command.getArgs()[0]);
+            CommandExecutor executor = Main.getController().getCommandManager().getExecutor(command.getArgs()[0]);
             if (executor == null) {
                 command.getChannel().sendMessage(
                         "このコマンドは登録されていません。").queue();

@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ModuleRegistry {
-    private static final Map<String, BotModule> modules = new LinkedHashMap<>();
+    private final Map<String, BotModule> modules;
 
-    private ModuleRegistry() {
-        throw new UnsupportedOperationException();
+    public ModuleRegistry() {
+        modules = new LinkedHashMap<>();
     }
 
     /**
@@ -36,7 +36,7 @@ public class ModuleRegistry {
      * @param module 登録するモジュール
      * @throws ModuleDuplicateException 登録しようとしているモジュールが既に存在している場合にスローされます。
      */
-    public static synchronized void registerModule(BotModule module) throws ModuleDuplicateException {
+    public synchronized void registerModule(BotModule module) throws ModuleDuplicateException {
         if (modules.containsKey(module.getDescription().getName()))
             throw new ModuleDuplicateException(module.getDescription().getName());
         else
@@ -48,7 +48,7 @@ public class ModuleRegistry {
      *
      * @param name 削除するモジュール
      */
-    public static synchronized void deleteModule(String name) {
+    public synchronized void deleteModule(String name) {
         modules.remove(name);
     }
 
@@ -57,7 +57,7 @@ public class ModuleRegistry {
      *
      * @return 登録されている全てのモジュールの一覧
      */
-    public static synchronized List<BotModule> getModules() {
+    public synchronized List<BotModule> getModules() {
         return new ArrayList<>(modules.values());
     }
 
@@ -67,7 +67,7 @@ public class ModuleRegistry {
      * @param name 取得するモジュールの名前
      * @return 該当するモジュール
      */
-    public static synchronized BotModule getModule(String name) {
+    public synchronized BotModule getModule(String name) {
         return modules.get(name);
     }
 }

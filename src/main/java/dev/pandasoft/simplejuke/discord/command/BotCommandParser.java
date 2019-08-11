@@ -23,18 +23,25 @@ import java.util.Arrays;
 
 public class BotCommandParser {
 
+    /**
+     * 受信したメッセージをBotコマンドとして使用できる形に整形します。
+     *
+     * @param prefix メッセージをコマンドとして認識する接頭辞
+     * @param event  受信したメッセージイベント
+     * @return 生成されたBotコマンド
+     */
     public BotCommand parse(String prefix, MessageReceivedEvent event) {
         String raw = event.getMessage().getContentRaw();
 
         String input;
         // 自分宛てのメンションの場合はコマンドとして認識
-         if (raw.startsWith(prefix)) {
-             input = raw.substring(prefix.length()).trim();
-         } else if (!event.getMessage().getMentions().isEmpty()) {
-             if (!event.getMessage().isMentioned(event.getJDA().getSelfUser()))
-                 return null;
-             input = raw.substring(event.getJDA().getSelfUser().getAsMention().length()).trim();
-             // コマンドではないメッセージを無視
+        if (raw.startsWith(prefix)) {
+            input = raw.substring(prefix.length()).trim();
+        } else if (!event.getMessage().getMentions().isEmpty()) {
+            if (!event.getMessage().isMentioned(event.getJDA().getSelfUser()))
+                return null;
+            input = raw.substring(event.getJDA().getSelfUser().getAsMention().length()).trim();
+            // コマンドではないメッセージを無視
         } else {
             return null;
         }
@@ -49,7 +56,7 @@ public class BotCommandParser {
         String commandTrigger = args[0];
 
         // コマンドクラスの取得
-        CommandExecutor command = Main.getController().getCommandRegistry().getExecutor(commandTrigger.toLowerCase());
+        CommandExecutor command = Main.getController().getCommandManager().getExecutor(commandTrigger.toLowerCase());
         if (command == null)
             return null;
         else

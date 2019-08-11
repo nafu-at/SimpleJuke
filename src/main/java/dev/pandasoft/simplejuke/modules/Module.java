@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.modules;
 
 import dev.pandasoft.simplejuke.BotController;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
-import dev.pandasoft.simplejuke.modules.meta.ModuleDescription;
+import dev.pandasoft.simplejuke.discord.command.CommandRegistry;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -69,6 +69,13 @@ public interface Module {
      * このモジュールに紐付けられたすべてのコマンドの登録を解除します。
      */
     void removeCommands();
+
+    /**
+     * このモジュールに紐付けられたコマンドレジストリを返します。
+     *
+     * @return 紐付けられたコマンドレジストリ
+     */
+    CommandRegistry getCommandRegistry();
 
     /**
      * このモジュールの詳細情報を返します。

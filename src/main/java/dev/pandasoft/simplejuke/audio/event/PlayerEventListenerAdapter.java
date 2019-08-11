@@ -69,15 +69,15 @@ public class PlayerEventListenerAdapter implements IPlayerEventListener, AudioEv
 
     /**
      * @param player Audio player
-     * @param track Audio track that started
+     * @param track  Audio track that started
      */
     public void onTrackStart(IPlayer player, AudioTrack track) {
         // Adapter dummy method
     }
 
     /**
-     * @param player Audio player
-     * @param track Audio track that ended
+     * @param player    Audio player
+     * @param track     Audio track that ended
      * @param endReason The reason why the track stopped playing
      */
     public void onTrackEnd(IPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
@@ -85,8 +85,8 @@ public class PlayerEventListenerAdapter implements IPlayerEventListener, AudioEv
     }
 
     /**
-     * @param player Audio player
-     * @param track Audio track where the exception occurred
+     * @param player    Audio player
+     * @param track     Audio track where the exception occurred
      * @param exception The exception that occurred
      */
     public void onTrackException(IPlayer player, AudioTrack track, Exception exception) {
@@ -94,8 +94,8 @@ public class PlayerEventListenerAdapter implements IPlayerEventListener, AudioEv
     }
 
     /**
-     * @param player Audio player
-     * @param track Audio track where the exception occurred
+     * @param player      Audio player
+     * @param track       Audio track where the exception occurred
      * @param thresholdMs The wait threshold that was exceeded for this event to trigger
      */
     public void onTrackStuck(IPlayer player, AudioTrack track, long thresholdMs) {
@@ -133,13 +133,13 @@ public class PlayerEventListenerAdapter implements IPlayerEventListener, AudioEv
             onTrackStart(new LavaplayerPlayerWrapper(event.player),
                     ((com.sedmelluq.discord.lavaplayer.player.event.TrackStartEvent) event).track);
         } else if (event instanceof com.sedmelluq.discord.lavaplayer.player.event.TrackEndEvent) {
-            onTrackEnd(new LavaplayerPlayerWrapper (event.player),
+            onTrackEnd(new LavaplayerPlayerWrapper(event.player),
                     ((com.sedmelluq.discord.lavaplayer.player.event.TrackEndEvent) event).track, ((com.sedmelluq.discord.lavaplayer.player.event.TrackEndEvent) event).endReason);
         } else if (event instanceof com.sedmelluq.discord.lavaplayer.player.event.TrackExceptionEvent) {
             onTrackException(new LavaplayerPlayerWrapper(event.player),
                     ((com.sedmelluq.discord.lavaplayer.player.event.TrackExceptionEvent) event).track, ((com.sedmelluq.discord.lavaplayer.player.event.TrackExceptionEvent) event).exception);
         } else if (event instanceof com.sedmelluq.discord.lavaplayer.player.event.TrackStuckEvent) {
-            onTrackStuck(new LavaplayerPlayerWrapper (event.player),
+            onTrackStuck(new LavaplayerPlayerWrapper(event.player),
                     ((com.sedmelluq.discord.lavaplayer.player.event.TrackStuckEvent) event).track, ((com.sedmelluq.discord.lavaplayer.player.event.TrackStuckEvent) event).thresholdMs);
         }
     }
