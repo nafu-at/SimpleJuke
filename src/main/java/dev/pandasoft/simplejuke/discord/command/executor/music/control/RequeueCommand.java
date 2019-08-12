@@ -31,13 +31,13 @@ public class RequeueCommand extends CommandExecutor {
     @Override
     public void onInvoke(BotCommand command) {
         GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
-        audioPlayer.play(audioPlayer.getNowPlaying().makeClone(), 2);
+        audioPlayer.play(audioPlayer.getNowPlaying().makeClone());
         audioPlayer.skip();
     }
 
     @Override
     public String help() {
-        return "```%prefix%requeue 再生中の曲を頭からもう一度再生します。```";
+        return "```%prefix%requeue 再生中の曲をキューに追加してスキップします。```";
     }
 
     @Override

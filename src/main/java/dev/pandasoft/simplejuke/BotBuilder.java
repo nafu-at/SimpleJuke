@@ -98,7 +98,8 @@ public class BotBuilder {
         defaultCommands.add(new PauseCommand("pause", "ps"));
         defaultCommands.add(new PlayCommand("play", "p"));
         defaultCommands.add(new RepeatCommand("repeat", "r"));
-        defaultCommands.add(new RequeueCommand("requeue", "replay", "restart", "re"));
+        defaultCommands.add(new RePlayCommand("replay", "rep"));
+        defaultCommands.add(new RequeueCommand("requeue", "req"));
         defaultCommands.add(new ReShuffleCommand("reshuffle", "resh"));
         defaultCommands.add(new SeekCommand("seek"));
         defaultCommands.add(new ShuffleCommand("shuffle", "sh"));

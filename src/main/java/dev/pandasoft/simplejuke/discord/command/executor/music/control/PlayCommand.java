@@ -28,10 +28,12 @@ import dev.pandasoft.simplejuke.http.youtube.YouTubeSearchResults;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -39,8 +41,11 @@ public class PlayCommand extends CommandExecutor {
     private static final Pattern URL_REGEX = Pattern.compile("^(http|https)://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$");
     private static final Pattern NOMBER_REGEX = Pattern.compile("^[1-5]*$");
 
+    private final CommandTempRegistry tempRegistry;
+
     public PlayCommand(String name, String... aliases) {
         super(name, aliases);
+        tempRegistry = new CommandTempRegistry();
     }
 
     @Override
@@ -69,14 +74,21 @@ public class PlayCommand extends CommandExecutor {
                 if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE))
                     command.getMessage().delete().submit();
             } else if (NOMBER_REGEX.matcher(command.getArgs()[0]).find()) {
-                Object object = CommandTempRegistry.removeTemp(command.getGuild());
-                if (object instanceof YouTubeSearchResults) {
-                    YouTubeSearchResults searchResult = (YouTubeSearchResults) object;
+                List<Object> objects = tempRegistry.removeTemp(command.getGuild());
+                if (objects.get(0) instanceof YouTubeSearchResults
+                        && objects.get(1) instanceof Message
+                        && objects.get(2) instanceof Message) {
+                    YouTubeSearchResults searchResult = (YouTubeSearchResults) objects.get(0);
+                    Message message = (Message) objects.get(1);
+                    Message sendMessage = (Message) objects.get((2));
                     audioPlayer.loadItemOrdered("https://www.youtube.com/watch?v="
                                     + searchResult.getItems()[Integer.parseInt(command.getArgs()[0]) - 1].getID().getVideoID(),
                             command.getInvoker());
-                    if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE))
+                    if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
                         command.getMessage().delete().submit();
+                        sendMessage.delete().submit();
+                        message.delete().submit();
+                    }
                 }
             } else {
                 File file = new File(command.getArgs()[0]);
@@ -104,8 +116,7 @@ public class PlayCommand extends CommandExecutor {
                     }
                     message.append("\n\n**再生するには `play [1-5]` で選択してください。**");
 
-                    CommandTempRegistry.registerTemp(command.getGuild(), result);
-                    command.getChannel().sendMessage(message.toString()).queue();
+                    command.getChannel().sendMessage(message.toString()).queue(send -> tempRegistry.registerTemp(command.getGuild(), result, command.getMessage(), send));
                 } catch (IOException e) {
                     ExceptionUtil.sendStackTrace(command.getGuild(), e, "検索結果の取得に失敗しました。");
                 }

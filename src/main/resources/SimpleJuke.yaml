@@ -39,7 +39,7 @@ basic:
 advanced:
   googleAPIToken: ""                   # 入力することでYouTubeの動画検索機能が利用できます。
   # Botのアップデート情報が配信されているアドレスを指定します。
-  updateInfoUrl: "https://raw.githubusercontent.com/kumanekosoft/SimpleJuke/dev"
+  updateInfoUrl: "https://raw.githubusercontent.com/nafu-at/SimpleJuke/dev"
 
   useNodeServer: false                 # この設定を有効にするとオーディオの送信に負荷分散を利用します。
 

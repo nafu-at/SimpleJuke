@@ -18,29 +18,31 @@ package dev.pandasoft.simplejuke.discord.command;
 
 import net.dv8tion.jda.core.entities.Guild;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommandTempRegistry {
-    private CommandTempRegistry() {
-        throw new IllegalStateException();
+    private final Map<Guild, List<Object>> registry;
+
+    public CommandTempRegistry() {
+        registry = new HashMap<>();
     }
 
-    private static final Map<Guild, Object> registry = new HashMap<>();
-
-    public static void registerTemp(Guild guild, Object object) {
-        registry.put(guild, object);
+    public void registerTemp(Guild guild, Object... object) {
+        registry.put(guild, Arrays.asList(object));
     }
 
-    public static boolean equalsTemp(Guild guild, Object object) {
+    public boolean equalsTemp(Guild guild, Object object) {
         return object.equals(registry.get(guild));
     }
 
-    public static Object getTempObject(Guild guild) {
+    public List<Object> getTempObject(Guild guild) {
         return registry.get(guild);
     }
 
-    public static Object removeTemp(Guild guild) {
+    public List<Object> removeTemp(Guild guild) {
         return registry.remove(guild);
     }
 }

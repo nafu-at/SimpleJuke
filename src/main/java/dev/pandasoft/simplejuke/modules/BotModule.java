@@ -61,7 +61,7 @@ public abstract class BotModule implements Module {
 
     @Override
     public void registerCommands(List<CommandExecutor> executors) {
-        executors.forEach(executor -> registerCommand(executor));
+        executors.forEach(this::registerCommand);
     }
 
     @Override

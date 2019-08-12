@@ -58,6 +58,8 @@ SimpleJukeのリポジトリにIssueを立てて報告してください。
 - SLF4J api
 - Lavalink-Client
 
+#### The 3-Clause BSD License
+- Sentry Java For Logback
 
 #### GNU General Public License, version 2
 **(The Universal FOSS Exception, Version 1.0)**
