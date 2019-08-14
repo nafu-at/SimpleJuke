@@ -47,6 +47,7 @@ import dev.pandasoft.simplejuke.discord.handler.MessageReceivedEventHandler;
 import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
 import dev.pandasoft.simplejuke.modules.ModuleManager;
 import dev.pandasoft.simplejuke.modules.ModuleRegistry;
+import dev.pandasoft.simplejuke.util.GuildOwnerUpdateAgent;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import io.sentry.Sentry;
 import lavalink.client.io.jda.JdaLavalink;
@@ -81,6 +82,7 @@ public class BotBuilder {
     protected ModuleRegistry moduleRegistry;
     protected ModuleManager moduleManager = null;
     protected StateUpdateAgent updateAgent = null;
+    protected GuildOwnerUpdateAgent ownerUpdateAgent = null;
 
     protected final List<CommandExecutor> getDefaultCommands() {
         List<CommandExecutor> defaultCommands = new ArrayList<>();
@@ -175,6 +177,11 @@ public class BotBuilder {
         return this;
     }
 
+    public BotBuilder setOwnerUpdateAgent(GuildOwnerUpdateAgent ownerUpdateAgent) {
+        this.ownerUpdateAgent = ownerUpdateAgent;
+        return this;
+    }
+
     protected BotController build() throws SQLException, LoginException, InterruptedException {
         if (config == null) {
             SimpleJukeConfigLoader loader = new SimpleJukeConfigLoader();
@@ -253,6 +260,7 @@ public class BotBuilder {
             shardManagerBuilder.addEventListeners(new GuildVoiceUpdateEventHandler());
             shardManagerBuilder.addEventListeners(new MessageReceivedEventHandler());
             shardManager = shardManagerBuilder.build();
+            log.info("Starting Discord Client...");
         }
 
         try {
@@ -291,12 +299,13 @@ public class BotBuilder {
 
         if (updateAgent == null) {
             updateAgent = new StateUpdateAgent();
-            Thread updateThread = new Thread(updateAgent);
-            updateThread.setName("UpdateAgent-Thread");
-            updateThread.setDaemon(true);
+        }
+
+        if (ownerUpdateAgent == null) {
+            ownerUpdateAgent = new GuildOwnerUpdateAgent();
         }
 
         return new BotController(config, databaseConnector, guildSettingsManager, userDataManager, shardManager,
-                lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent);
+                lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent, ownerUpdateAgent);
     }
 }

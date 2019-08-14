@@ -5,9 +5,12 @@ import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.entities.User;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class UserInfoCommand extends CommandExecutor {
 
@@ -18,25 +21,45 @@ public class UserInfoCommand extends CommandExecutor {
     @Override
     public void onInvoke(BotCommand command) {
         if (!command.getMessage().getMentionedMembers().isEmpty()) {
-            command.getMessage().getMentionedMembers().forEach(member -> {
-                EmbedBuilder builder = new EmbedBuilder();
-                builder.setTitle(member.getNickname() + "'s Information");
-                builder.setThumbnail(member.getUser().getAvatarUrl());
-                builder.addField(new MessageEmbed.Field("Username", member.getUser().getAsTag(), true));
-                builder.addField(new MessageEmbed.Field("ID", member.getUser().getId(), true));
-                builder.addField(new MessageEmbed.Field("Nickname", member.getNickname(), true));
-                builder.addField(new MessageEmbed.Field("Join Date",
-                        member.getJoinDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
-                builder.addField(new MessageEmbed.Field("Account Create",
-                        member.getUser().getCreationTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
-                builder.addField(new MessageEmbed.Field("Permission",
-                        Main.getController().getUserDataManager().getUserPermission(member.getUser(),
-                                member.getGuild()).name(), true));
-                command.getChannel().sendMessage(builder.build()).queue();
-            });
+            command.getMessage().getMentionedMembers().forEach(member -> command.getChannel().sendMessage(buildMemberEmbed(member)).queue());
         } else if (command.getArgs().length >= 1) {
-            // TODO: 2019/08/07 メンション以外のユーザー指定の方法を実装する。
+            Arrays.stream(command.getArgs()).forEach(id -> {
+                User user = command.getChannel().getJDA().getUserById(id);
+                if (user == null)
+                    return;
+                MessageEmbed embed;
+                if (command.getGuild().isMember(user)) {
+                    Member member = command.getGuild().getMember(user);
+                    embed = buildMemberEmbed(member);
+                } else {
+                    EmbedBuilder builder = new EmbedBuilder();
+                    builder.setTitle(user.getName() + "'s Information");
+                    builder.setThumbnail(user.getAvatarUrl());
+                    builder.addField(new MessageEmbed.Field("Username", user.getAsTag(), true));
+                    builder.addField(new MessageEmbed.Field("ID", user.getId(), true));
+                    builder.addField(new MessageEmbed.Field("Account Create",
+                            user.getCreationTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
+                    embed = builder.build();
+                }
+                command.getChannel().sendMessage(embed).queue();
+            });
         }
+    }
+
+    private MessageEmbed buildMemberEmbed(Member member) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle(member.getNickname() + "'s Information");
+        builder.setThumbnail(member.getUser().getAvatarUrl());
+        builder.addField(new MessageEmbed.Field("Username", member.getUser().getAsTag(), true));
+        builder.addField(new MessageEmbed.Field("ID", member.getUser().getId(), true));
+        builder.addField(new MessageEmbed.Field("Nickname", member.getNickname(), true));
+        builder.addField(new MessageEmbed.Field("Join Date",
+                member.getJoinDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
+        builder.addField(new MessageEmbed.Field("Account Create",
+                member.getUser().getCreationTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
+        builder.addField(new MessageEmbed.Field("Permission",
+                Main.getController().getUserDataManager().getUserPermission(member).name(), true));
+        return builder.build();
     }
 
     @Override

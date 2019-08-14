@@ -126,7 +126,9 @@ public class PlayCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return null;
+        return "```%prefix%play [url] 指定されたURLから音楽を再生します。\n" +
+                "%prefix%play [search] YouTubeで指定したワードを検索します。\n" +
+                "%prefix%play <1-5> 検索結果を指定して音楽を再生します。```";
     }
 
     @Override

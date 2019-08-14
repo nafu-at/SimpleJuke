@@ -75,7 +75,7 @@ public class UpdateInfoReader {
         for (VersionInfo versionInfo : updateInfo.getVersions()) {
             if (versionInfo.getLevel().getLevel() >= level)
                 latestVersion = versionInfo;
-            if (versionInfo.getLevel().equals(VERSION))
+            if (versionInfo.getVersion().equals(VERSION))
                 nowVersion = versionInfo;
         }
 

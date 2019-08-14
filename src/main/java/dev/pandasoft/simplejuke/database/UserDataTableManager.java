@@ -34,7 +34,7 @@ public class UserDataTableManager {
         try (Connection connection = connector.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS " + tablename + " (updateDate DATE, userIdLong CHAR(18) NOT NULL " +
-                            "PRIMARY KEY, userId VARCHAR(128), userdata LONGBLOB)")) {
+                            "PRIMARY KEY, userdata LONGBLOB)")) {
                 ps.execute();
             }
         }
@@ -43,12 +43,11 @@ public class UserDataTableManager {
     public void saveData(long userIdLong, String userId, InputStream stream) throws SQLException {
         try (Connection connection = connector.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "REPLACE INTO " + tablename + " (updateDate, userIdLong, userId, userdata) VALUES (?, ?, ?, ?)")) {
+                     "REPLACE INTO " + tablename + " (updateDate, userIdLong, userdata) VALUES (?, ?, ?)")) {
             java.util.Date date = new java.util.Date();
             ps.setDate(1, new Date(date.getTime()));
             ps.setLong(2, userIdLong);
-            ps.setString(3, userId);
-            ps.setBinaryStream(4, stream);
+            ps.setBinaryStream(3, stream);
             ps.execute();
         }
     }

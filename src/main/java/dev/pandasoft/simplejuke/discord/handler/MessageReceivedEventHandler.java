@@ -46,7 +46,8 @@ public class MessageReceivedEventHandler extends ListenerAdapter {
             return;
         log.debug("Command Received: {}", command.toString());
 
-        if (command.getCommand().getPermission().getPermissionLevel() > Main.getController().getUserDataManager().getUserPermission(event.getAuthor(), guild).getPermissionLevel()) {
+        if (command.getCommand().getPermission().getPermissionLevel() >
+                Main.getController().getUserDataManager().getUserPermission(event.getGuild().getMember(event.getAuthor())).getPermissionLevel()) {
             event.getChannel().sendMessage("このコマンドを実行するために必要な権限がありません！").queue();
             return;
         }

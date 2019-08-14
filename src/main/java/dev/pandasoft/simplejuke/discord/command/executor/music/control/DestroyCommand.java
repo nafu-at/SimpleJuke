@@ -37,11 +37,11 @@ public class DestroyCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return null;
+        return "%prefix%destroy プレーヤーをリセットし、プレイリストをクリアします。";
     }
 
     @Override
     public CommandPermission getPermission() {
-        return CommandPermission.USER;
+        return CommandPermission.GUILD_OWNER;
     }
 }

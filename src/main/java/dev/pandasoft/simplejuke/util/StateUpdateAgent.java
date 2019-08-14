@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.bot.sharding.ShardManager;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class StateUpdateAgent implements Runnable {
@@ -34,25 +33,15 @@ public class StateUpdateAgent implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            latestUpdate = new Date();
+        latestUpdate = new Date();
 
-            ShardManager shardManager = Main.getController().getShardManager();
-            guildCount = shardManager.getGuilds().size();
-            userCount = shardManager.getUsers().size();
-            textChannelCount = shardManager.getTextChannels().size();
-            voiceChannelCount = shardManager.getVoiceChannels().size();
+        ShardManager shardManager = Main.getController().getShardManager();
+        guildCount = shardManager.getGuilds().size();
+        userCount = shardManager.getUsers().size();
+        textChannelCount = shardManager.getTextChannels().size();
+        voiceChannelCount = shardManager.getVoiceChannels().size();
 
-            Main.getController().getInfoReader().loadUpdateInfo();
-
-            try {
-                Thread.sleep(TimeUnit.HOURS.toMillis(1));
-            } catch (InterruptedException e) {
-                log.error("統計情報更新の待機中に問題が発生しました。", e);
-                Thread.currentThread().interrupt();
-                break;
-            }
-        }
+        Main.getController().getInfoReader().loadUpdateInfo();
     }
 
     public int getGuildCount() {

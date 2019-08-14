@@ -65,6 +65,9 @@ public class UpdateInfoCommand extends CommandExecutor {
                     break;
                 case NIGHTLY:
                     builder.setColor(Color.BLUE);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + latestVersion.getLevel());
             }
 
             builder.addField("Version", latestVersion.getVersion(), true);

@@ -5,7 +5,7 @@ versions:
       - "**このバージョンはそれ以前のバージョンとの互換性はありません。**"
       - "**このバージョンを使用するにはデータベースをリセットする必要があります。**"
       - "**詳しくはこちらの変更履歴を御覧ください。**"
-      - "https://github.com/kumanekosoft/SimpleJuke/blob/dev/DevlopmentStatus.md"
+      - "https://github.com/nafu-at/SimpleJuke/blob/dev/DevlopmentStatus.md"
     knownbugs: []
     updatedate: "2019-07-20 00:00"
     download: ""

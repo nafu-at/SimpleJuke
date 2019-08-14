@@ -21,7 +21,7 @@ import dev.pandasoft.simplejuke.database.UserDataTableManager;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.User;
 
 import java.io.*;
@@ -56,12 +56,12 @@ public class UserDataManager {
         });
     }
 
-    public CommandPermission getUserPermission(User user, Guild guild) {
-        Map<Long, CommandPermission> permissions = getUserData(user);
+    public CommandPermission getUserPermission(Member member) {
+        Map<Long, CommandPermission> permissions = getUserData(member.getUser());
         if (permissions == null)
             return null;
 
-        CommandPermission permission = permissions.get(guild.getIdLong());
+        CommandPermission permission = permissions.get(member.getGuild().getIdLong());
 
         if (permission == null) {
             String ownerId = "";
@@ -72,16 +72,16 @@ public class UserDataManager {
                 log.error("Bot情報の取得中にエラーが発生しました。");
             }
 
-            if (ownerId.equals(user.getId()))
+            if (ownerId.equals(member.getUser().getId()))
                 permission = CommandPermission.BOT_OWNER;
-            else if (Main.getController().getConfig().getBasicConfig().getBotAdmins().contains(user.getIdLong()))
+            else if (Main.getController().getConfig().getBasicConfig().getBotAdmins().contains(member.getUser().getIdLong()))
                 return CommandPermission.BOT_ADMIN;
-            else if (user.getId().equals(guild.getOwnerId()))
+            else if (member.isOwner())
                 permission = CommandPermission.GUILD_OWNER;
             else
                 permission = CommandPermission.USER;
             try {
-                setUserPermission(user, guild, permission);
+                setUserPermission(member, permission);
             } catch (SQLException | IOException e) {
                 log.error("ユーザーデータの更新中にエラーが発生しました。");
             }
@@ -89,14 +89,14 @@ public class UserDataManager {
         return permission;
     }
 
-    public void setUserPermission(User user, Guild guild, CommandPermission permission) throws IOException, SQLException {
-        Map<Long, CommandPermission> permissions = getUserData(user);
-        permissions.put(guild.getIdLong(), permission);
+    public void setUserPermission(Member member, CommandPermission permission) throws IOException, SQLException {
+        Map<Long, CommandPermission> permissions = getUserData(member.getUser());
+        permissions.put(member.getGuild().getIdLong(), permission);
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             ObjectOutputStream outputStream = new ObjectOutputStream(baos);
             outputStream.writeObject(permissions);
             outputStream.flush();
-            tableManager.saveData(user.getIdLong(), user.getAsTag(),
+            tableManager.saveData(member.getUser().getIdLong(), member.getUser().getAsTag(),
                     new ByteArrayInputStream(baos.toByteArray()));
         }
     }

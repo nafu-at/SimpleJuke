@@ -20,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.security.auth.login.LoginException;
 import java.sql.SQLException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class Main {
@@ -49,8 +52,11 @@ public class Main {
         }
 
         controller.getModuleManager().enableAllModules();
-        log.info("All modules have been activated.");
-        controller.getUpdateAgent().run();
+        log.info("すべてのモジュールがアクティブ化されました。");
+
+        ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+        ses.scheduleAtFixedRate(controller.getUpdateAgent(), 0, 1, TimeUnit.HOURS);
+        ses.scheduleAtFixedRate(controller.getOwnerUpdateAgent(), 0, 1, TimeUnit.DAYS);
     }
 
     public static BotController getController() {
