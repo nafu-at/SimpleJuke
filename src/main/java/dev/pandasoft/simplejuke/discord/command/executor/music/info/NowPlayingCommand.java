@@ -58,8 +58,8 @@ public class NowPlayingCommand extends CommandExecutor {
         GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
         if (audioPlayer.isPlaying()) {
             AudioTrackContext trackContext = audioPlayer.getNowPlaying();
-            AudioTrack audioTrack = trackContext.getTrack();
-            if (audioTrack != null) {
+            if (trackContext != null) {
+                AudioTrack audioTrack = trackContext.getTrack();
                 if (audioTrack instanceof YoutubeAudioTrack) {
                     try {
                         command.getChannel().sendMessage(getYouTubeEmbed(audioPlayer)).queue();
