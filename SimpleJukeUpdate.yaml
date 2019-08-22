@@ -1,4 +1,14 @@
 versions:
+  - version: 0.1.2.1
+    title: 細かなバグの修正
+    description:
+      - "NowPlayingコマンドを実行した際にエラーが出る不具合を修正しました。"
+      - "Interruptコマンドを実行した際に引数が正しくない場合エラーが出る不具合を修正しました。"
+    knownbugs: []
+    updatedate: "2019-08-22 20:20"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v0.1.2.1/SimpleJuke.jar"
+    level: BETA
+
   - version: 0.1.0
     title: データベース関連の大幅な仕様変更
     description:
