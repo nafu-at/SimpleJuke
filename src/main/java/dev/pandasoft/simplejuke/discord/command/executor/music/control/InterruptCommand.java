@@ -45,9 +45,14 @@ public class InterruptCommand extends CommandExecutor {
 
             audioPlayer.pause(false);
 
-            audioPlayer.loadItemOrdered(command.getArgs()[0], command.getInvoker(), Integer.parseInt(command.getArgs()[1]));
-            if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE))
-                command.getMessage().delete().submit();
+            try {
+                audioPlayer.loadItemOrdered(command.getArgs()[0], command.getInvoker(),
+                        Integer.parseInt(command.getArgs()[1]));
+                if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE))
+                    command.getMessage().delete().submit();
+            } catch (NumberFormatException e) {
+                command.getChannel().sendMessage("引数が正しくありません！").queue();
+            }
         }
     }
 
