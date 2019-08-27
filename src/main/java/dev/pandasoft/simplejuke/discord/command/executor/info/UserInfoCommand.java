@@ -4,10 +4,10 @@ import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class UserInfoCommand extends CommandExecutor {
                     builder.addField(new MessageEmbed.Field("Username", user.getAsTag(), true));
                     builder.addField(new MessageEmbed.Field("ID", user.getId(), true));
                     builder.addField(new MessageEmbed.Field("Account Create",
-                            user.getCreationTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
+                            user.getTimeCreated().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
                     embed = builder.build();
                 }
                 command.getChannel().sendMessage(embed).queue();
@@ -54,9 +54,9 @@ public class UserInfoCommand extends CommandExecutor {
         builder.addField(new MessageEmbed.Field("ID", member.getUser().getId(), true));
         builder.addField(new MessageEmbed.Field("Nickname", member.getNickname(), true));
         builder.addField(new MessageEmbed.Field("Join Date",
-                member.getJoinDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
+                member.getTimeJoined().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
         builder.addField(new MessageEmbed.Field("Account Create",
-                member.getUser().getCreationTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
+                member.getUser().getTimeCreated().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
         builder.addField(new MessageEmbed.Field("Permission",
                 Main.getController().getUserDataManager().getUserPermission(member).name(), true));
         return builder.build();

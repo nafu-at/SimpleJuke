@@ -22,7 +22,7 @@
 
     <groupId>dev.pandasoft</groupId>
     <artifactId>SimpleJuke</artifactId>
-    <version>0.1.2.1</version>
+    <version>0.2.0.0-SNAPSHOT</version>
 
     <build>
         <plugins>
@@ -185,7 +185,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>3.8.3_464</version>
+            <version>4.0.0_45</version>
         </dependency>
         <!-- Replace with Lavalink -->
         <dependency>
@@ -196,7 +196,7 @@
         <dependency>
             <groupId>com.github.FredBoat</groupId>
             <artifactId>Lavalink-Client</artifactId>
-            <version>8c3f0b9</version>
+            <version>9bda4ea</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>

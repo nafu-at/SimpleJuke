@@ -15,8 +15,12 @@ public class RePlayCommand extends CommandExecutor {
     @Override
     public void onInvoke(BotCommand command) {
         GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
-        audioPlayer.play(audioPlayer.getNowPlaying().makeClone(), 2);
-        audioPlayer.skip();
+        if (audioPlayer.isPlaying()) {
+            audioPlayer.play(audioPlayer.getNowPlaying().makeClone(), 2);
+            audioPlayer.skip();
+        } else {
+            command.getChannel().sendMessage("今は何も再生されていません!").queue();
+        }
     }
 
     @Override

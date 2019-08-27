@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.util;
 
 import dev.pandasoft.simplejuke.Main;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.bot.sharding.ShardManager;
+import net.dv8tion.jda.api.sharding.ShardManager;
 
 import java.util.Date;
 

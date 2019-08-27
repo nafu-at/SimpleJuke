@@ -52,9 +52,9 @@ import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import io.sentry.Sentry;
 import lavalink.client.io.jda.JdaLavalink;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
-import net.dv8tion.jda.bot.sharding.ShardManager;
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.sharding.ShardManager;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
@@ -202,7 +202,7 @@ public class BotBuilder {
         jdaLogger.setLevel(level);
         cpLogger.setLevel(level);
 
-        if (!config.getAdvancedConfig().getSentryDsn().isEmpty()) {
+        if (config.getAdvancedConfig().getSentryDsn() != null && !config.getAdvancedConfig().getSentryDsn().isEmpty()) {
             Sentry.init(config.getAdvancedConfig().getSentryDsn());
         }
 
@@ -284,7 +284,7 @@ public class BotBuilder {
             Thread.sleep(100);
         }
         log.debug("Connection Status: {} (Ping is {}ms)", shardManager.getStatus(0).toString(),
-                shardManager.getShardById(0).getPing());
+                shardManager.getShardById(0).getGatewayPing());
         log.info("Discord API Login... OK!");
 
         if (commandManager == null) {

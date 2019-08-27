@@ -34,8 +34,8 @@ import dev.pandasoft.simplejuke.http.youtube.YouTubeAPIClient;
 import dev.pandasoft.simplejuke.http.youtube.YouTubeObjectItem;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.io.IOException;

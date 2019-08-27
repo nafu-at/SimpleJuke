@@ -24,8 +24,8 @@ import dev.pandasoft.simplejuke.database.entities.RepeatSetting;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import lavalink.client.player.IPlayer;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.util.ArrayList;
 import java.util.Collections;

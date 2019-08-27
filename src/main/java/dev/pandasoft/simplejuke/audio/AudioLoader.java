@@ -32,7 +32,7 @@ import dev.pandasoft.simplejuke.config.MusicSourceSection;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.util.ArrayList;
 import java.util.Collections;

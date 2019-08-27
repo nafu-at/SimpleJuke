@@ -16,8 +16,8 @@
 
 package dev.pandasoft.simplejuke.util;
 
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.MessageChannel;
 
 import java.util.HashMap;
 import java.util.Map;

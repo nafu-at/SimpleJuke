@@ -21,8 +21,8 @@ import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class InterruptCommand extends CommandExecutor {
 
