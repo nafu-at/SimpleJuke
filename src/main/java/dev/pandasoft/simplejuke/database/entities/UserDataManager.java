@@ -21,8 +21,8 @@ import dev.pandasoft.simplejuke.database.UserDataTableManager;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 import java.io.*;
 import java.sql.SQLException;

@@ -27,9 +27,9 @@ import dev.pandasoft.simplejuke.http.youtube.YouTubeAPIClient;
 import dev.pandasoft.simplejuke.http.youtube.YouTubeSearchResults;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 import java.io.File;
 import java.io.IOException;

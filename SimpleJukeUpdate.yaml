@@ -1,4 +1,28 @@
 versions:
+  - version: 0.2.0.0
+    title: 依存関係の更新と細かなバグの修正
+    description:
+      - "使用するJDAをv3からv4に更新しました。また、関連するライブラリも同時に更新しました。"
+      - "ReQueueコマンドを曲が再生されていないときに実行するとエラーが出る不具合を修正しました。"
+      - "RePlayコマンドを曲が再生されていないときに実行するとエラーが出る不具合を修正しました。"
+      - "コマンド実行権限関連の正しく動作しない可能性のあるコードを修正しました。"
+    knownbugs: []
+    updatedate: "2019-08-28 16:15"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v0.2.0.0/SimpleJuke.jar"
+    level: BETA
+
+  - version: 0.2.0.0-SNAPSHOT
+    title: 依存関係の更新と細かなバグの修正
+    description:
+      - "使用するJDAをv3からv4に更新しました。また、関連するライブラリも同時に更新しました。"
+      - "ReQueueコマンドを曲が再生されていないときに実行するとエラーが出る不具合を修正しました。"
+      - "RePlayコマンドを曲が再生されていないときに実行するとエラーが出る不具合を修正しました。"
+      - "コマンド実行権限関連の正しく動作しない可能性のあるコードを修正しました。"
+    knownbugs: []
+    updatedate: "2019-08-27 23:15"
+    download: ""
+    level: NIGHTLY
+
   - version: 0.1.2.1
     title: 細かなバグの修正
     description:

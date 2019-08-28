@@ -17,7 +17,7 @@
 package dev.pandasoft.simplejuke.util;
 
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

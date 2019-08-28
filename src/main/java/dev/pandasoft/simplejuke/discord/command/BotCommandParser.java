@@ -17,7 +17,7 @@
 package dev.pandasoft.simplejuke.discord.command;
 
 import dev.pandasoft.simplejuke.Main;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.Arrays;
 

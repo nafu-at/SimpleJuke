@@ -19,7 +19,9 @@ package dev.pandasoft.simplejuke.audio;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 import lavalink.client.player.IPlayer;
 import lavalink.client.player.LavaplayerPlayerWrapper;
-import net.dv8tion.jda.core.audio.AudioSendHandler;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
+
+import java.nio.ByteBuffer;
 
 public class AudioPlayerSendHandler implements AudioSendHandler {
     private final IPlayer audioPlayer;
@@ -36,8 +38,12 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
     }
 
     @Override
-    public byte[] provide20MsAudio() {
-        return lastFrame.getData();
+    public ByteBuffer provide20MsAudio() {
+        if (lastFrame == null)
+            lastFrame = ((LavaplayerPlayerWrapper) audioPlayer).provide();
+        byte[] data = lastFrame != null ? lastFrame.getData() : null;
+        lastFrame = null;
+        return ByteBuffer.wrap(data);
     }
 
     @Override

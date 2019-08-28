@@ -23,8 +23,8 @@ import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.modules.BotModule;
 import dev.pandasoft.simplejuke.modules.ModuleDescription;
 import dev.pandasoft.simplejuke.modules.ModuleRegistry;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.util.List;
 
