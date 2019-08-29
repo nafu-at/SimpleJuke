@@ -10,8 +10,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.sedmelluq:lavaplayer:1.3.19" level="project" />
-    <orderEntry type="library" name="Maven: com.github.FredBoat:Lavalink-Client:209fa37" level="project" />
     <orderEntry type="library" name="Maven: com.sedmelluq:lavaplayer:1.3.18" level="project" />
     <orderEntry type="library" name="Maven: com.sedmelluq:jda-nas:1.0.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sedmelluq:udp-queue:1.0.6" level="project" />

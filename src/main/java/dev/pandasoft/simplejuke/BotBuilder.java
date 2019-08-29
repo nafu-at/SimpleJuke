@@ -259,26 +259,29 @@ public class BotBuilder {
             }
             shardManagerBuilder.addEventListeners(new GuildVoiceUpdateEventHandler());
             shardManagerBuilder.addEventListeners(new MessageReceivedEventHandler());
+
+            try {
+                if (config.getAdvancedConfig().isUseNodeServer()) {
+                    if (lavalink == null) {
+                        lavalink =
+                                new JdaLavalink(new DiscordAPIClient().getBotApplicationInfo(config.getBasicConfig().getDiscordToken()).getID(),
+                                        getShardsTotal(), shardId -> getJdaFromId(shardId));
+                    }
+
+                    for (LavalinkConfigSection node : config.getAdvancedConfig().getNodesInfo())
+                        lavalink.addNode(node.getNodeName(), URI.create(node.getAddress()), node.getPassword());
+                    shardManagerBuilder.addEventListeners(lavalink);
+                    shardManagerBuilder.setVoiceDispatchInterceptor(lavalink.getVoiceInterceptor());
+                    log.info("LavaLink Connecting... OK!");
+                }
+            } catch (IOException e) {
+                log.error("LavaLinkのロード中にエラーが発生しました。");
+            }
+
             shardManager = shardManagerBuilder.build();
             log.info("Starting Discord Client...");
         }
 
-        try {
-            if (config.getAdvancedConfig().isUseNodeServer()) {
-                if (lavalink == null) {
-                    lavalink =
-                            new JdaLavalink(new DiscordAPIClient().getBotApplicationInfo(config.getBasicConfig().getDiscordToken()).getID(),
-                                    shardManager.getShardsTotal(), shardManager::getShardById);
-                }
-
-                for (LavalinkConfigSection node : config.getAdvancedConfig().getNodesInfo())
-                    lavalink.addNode(node.getNodeName(), URI.create(node.getAddress()), node.getPassword());
-                shardManager.addEventListener(lavalink);
-                log.info("LavaLink Connecting... OK!");
-            }
-        } catch (IOException e) {
-            log.error("LavaLinkのロード中にエラーが発生しました。");
-        }
 
         while (!shardManager.getStatus(0).equals(JDA.Status.CONNECTED)) {
             Thread.sleep(100);
@@ -307,5 +310,17 @@ public class BotBuilder {
 
         return new BotController(config, databaseConnector, guildSettingsManager, userDataManager, shardManager,
                 lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent, ownerUpdateAgent);
+    }
+
+    private JDA getJdaFromId(int shardId) {
+        if (shardManager != null)
+            return shardManager.getShardById(shardId);
+        return null;
+    }
+
+    private int getShardsTotal() {
+        if (shardManager != null)
+            return shardManager.getShardsTotal();
+        return 1;
     }
 }
