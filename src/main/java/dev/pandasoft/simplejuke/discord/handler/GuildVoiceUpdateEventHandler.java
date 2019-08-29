@@ -28,7 +28,8 @@ public class GuildVoiceUpdateEventHandler extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event) {
-        if (event.getChannelLeft().equals(event.getEntity().getGuild().getSelfMember().getVoiceState().getChannel())) {
+        if (event.getChannelLeft() != null &&
+                event.getChannelLeft().equals(event.getEntity().getGuild().getSelfMember().getVoiceState().getChannel())) {
             for (Member member : event.getChannelLeft().getMembers())
                 if (!member.getUser().isBot())
                     return;
