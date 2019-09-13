@@ -23,9 +23,11 @@ import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.util.MessageUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 public class ListCommand extends CommandExecutor {
 
     public ListCommand(String name, String... aliases) {
@@ -56,7 +58,7 @@ public class ListCommand extends CommandExecutor {
                 listPage++;
 
             if (page > listPage) {
-                command.getChannel().sendMessage("ページが大きすぎます！").queue();
+                command.getChannel().sendMessage("指定されたページはありません！").queue();
                 return;
             }
 

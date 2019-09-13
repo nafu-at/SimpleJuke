@@ -58,7 +58,7 @@ public class MessageUtil {
     }
 
     public static long parseTimeToMillis(String time) {
-        int sec = 0;
+        int sec;
         int min = 0;
         int hrs = 0;
 
