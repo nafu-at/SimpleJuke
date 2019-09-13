@@ -40,10 +40,14 @@ public class ModuleInfoCommand extends CommandExecutor {
         if (command.getArgs().length == 0) {
             StringBuilder builder = new StringBuilder();
             List<BotModule> modules = moduleRegistry.getModules();
-            builder.append(modules.size() + "個のモジュールがロードされています。\n```");
-            modules.forEach(module -> builder.append(module.getDescription().getName() + " : v" + module.getDescription().getVersion()));
-            builder.append("```");
-            command.getChannel().sendMessage(builder.toString()).queue();
+            if (modules.size() == 0) {
+                command.getChannel().sendMessage("ロードされているモジュールはありません。").queue();
+            } else {
+                builder.append(modules.size() + "個のモジュールがロードされています。\n```");
+                modules.forEach(module -> builder.append(module.getDescription().getName() + " : v" + module.getDescription().getVersion()));
+                builder.append("```");
+                command.getChannel().sendMessage(builder.toString()).queue();
+            }
         } else {
             BotModule module = moduleRegistry.getModule(command.getArgs()[0]);
             if (module != null) {

@@ -1,4 +1,15 @@
 versions:
+  - version: 0.2.0.1
+    title: 依存関係の更新
+    description:
+      - "LavaPlayerのバージョンを更新しました。"
+      - "SoundCloudトラックが再生されない問題が解消されました。"
+      - "メッセージに関する若干の問題を修正しました。"
+    knownbugs: []
+    updatedate: "2019-09-13 19:30"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v0.2.0.1/SimpleJuke.jar"
+    level: BETA
+
   - version: 0.2.0.0-fix
     title: 致命的な不具合の修正
     description:
