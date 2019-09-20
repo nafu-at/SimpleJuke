@@ -19,16 +19,29 @@ package dev.pandasoft.simplejuke.discord.command.executor.admin;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
+import dev.pandasoft.simplejuke.discord.command.CommandTempRegistry;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class ShutdownCommand extends CommandExecutor {
+    private final CommandTempRegistry tempRegistry;
 
     public ShutdownCommand(String name, String... aliases) {
         super(name, aliases);
+        tempRegistry = new CommandTempRegistry();
     }
 
     @Override
     public void onInvoke(BotCommand command) {
-        System.exit(0);
+        if (command.getArgs().length == 0) {
+            String pass = RandomStringUtils.randomAlphanumeric(6);
+            tempRegistry.registerTemp(command.getGuild(), pass);
+            command.getChannel().sendMessage("誤操作防止のため実行キーが生成されました。 **`" + pass + "`**を指定して実行して下さい。");
+        } else {
+            if (command.getArgs()[0].equals(tempRegistry.getTempObject(command.getGuild())))
+                System.exit(0);
+            else
+                command.getChannel().sendMessage("実行キーが正しくありません");
+        }
     }
 
     @Override

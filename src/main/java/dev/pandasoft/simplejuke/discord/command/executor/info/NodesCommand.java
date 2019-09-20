@@ -20,10 +20,13 @@ import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
+import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import lavalink.client.io.LavalinkSocket;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class NodesCommand extends CommandExecutor {
@@ -40,15 +43,40 @@ public class NodesCommand extends CommandExecutor {
                 List<LavalinkSocket> nodes = Main.getController().getLavalink().getNodes();
                 builder.append("このBotには" + nodes.size() + "個のノードが登録されています。\n");
                 builder.append("```");
-                nodes.forEach(node -> {
+                for (int i = 0; nodes.size() > i; i++) {
+                    LavalinkSocket node = nodes.get(i);
+                    builder.append("\nNo." + i);
                     builder.append("\nNodeName: " + node.getName() + "\n");
                     builder.append("Address: " + node.getRemoteUri() + "\n");
                     builder.append("Memory: " + fromByteToMB(node.getStats().getMemUsed()) + "MB / " + fromByteToMB(node.getStats().getMemReservable()) + "MB\n");
                     builder.append("Players: " + node.getStats().getPlayingPlayers() + " / " + node.getStats().getPlayers() + "\n");
-                });
+                }
                 builder.append("```");
                 command.getChannel().sendMessage(builder.toString()).queue();
-            } // TODO: 2019-08-04 ノード名指定で情報を表示する機能の実装
+            } else switch (command.getArgs()[0]) {
+                case "add":
+                    try {
+                        if (command.getArgs().length == 3) {
+                            Main.getController().getLavalink().addNode(new URI(command.getArgs()[1]),
+                                    command.getArgs()[2]);
+                        } else if (command.getArgs().length == 4) {
+                            Main.getController().getLavalink().addNode(command.getArgs()[1],
+                                    new URI(command.getArgs()[2]), command.getArgs()[3]);
+                        }
+                        command.getMessage().delete().submit();
+                    } catch (URISyntaxException e) {
+                        command.getChannel().sendMessage("入力されたURIが正しくありません！").queue();
+                    }
+                    break;
+
+                case "remove":
+                    try {
+                        Main.getController().getLavalink().removeNode(Integer.parseInt(command.getArgs()[1]));
+                        command.getChannel().sendMessage("ノードを削除しました。");
+                    } catch (NumberFormatException e) {
+                        command.getChannel().sendMessage("ノード番号を指定して下さい。");
+                    }
+            }
         } else {
             command.getChannel().sendMessage("このBotはノードが有効化されていません！").queue();
         }
@@ -56,7 +84,10 @@ public class NodesCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%nodes Botに接続されているLavaLinkノード一覧を表示します。```";
+        return "```%prefix%nodes Botに接続されているLavaLinkノード一覧を表示します。\n" +
+                "%prefix%nodes add <address> <password> Botにノードを追加します。これは再起動後保持されません。\n" +
+                "%prefix%nodes add <name> <address> <password> Botにノードを追加します。これは再起動後保持されません。\n" +
+                "%prefix%nodes remove <Number> 指定したノードを削除します。これは再起動後保持されません。```";
     }
 
     @Override

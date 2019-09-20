@@ -78,5 +78,6 @@ SimpleJukeのリポジトリにIssueを立てて報告してください。
 - jackson-dataformat-yaml
 - Apache Commons Codec
 - Apache Commons IO
+- Apache Commons Lang
 - HikariCP
 - SQLite JDBC
