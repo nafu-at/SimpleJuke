@@ -22,7 +22,7 @@ import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.util.update.VersionInfo;
 import dev.pandasoft.simplejuke.util.update.VersionType;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 
@@ -96,7 +96,7 @@ public class UpdateInfoCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%updateinfo\n" + "Botの更新情報を表示します。```";
+        return "```%prefix%updateinfo Botの更新情報を表示します。```";
     }
 
     @Override

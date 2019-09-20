@@ -28,7 +28,7 @@ import dev.pandasoft.simplejuke.util.GuildOwnerUpdateAgent;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import dev.pandasoft.simplejuke.util.UpdateInfoReader;
 import lavalink.client.io.jda.JdaLavalink;
-import net.dv8tion.jda.bot.sharding.ShardManager;
+import net.dv8tion.jda.api.sharding.ShardManager;
 
 public class BotController {
     protected final SimpleJukeConfig config;

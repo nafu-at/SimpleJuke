@@ -36,7 +36,7 @@ public class PauseCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%pause\n" + "再生中の楽曲を一時停止します。```";
+        return "```%prefix%pause 再生中の楽曲を一時停止します。```";
     }
 
     @Override

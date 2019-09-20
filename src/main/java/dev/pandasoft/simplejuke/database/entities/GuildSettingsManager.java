@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.database.entities;
 
 import dev.pandasoft.simplejuke.database.GuildSettingsTableManager;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.io.*;
 import java.sql.SQLException;

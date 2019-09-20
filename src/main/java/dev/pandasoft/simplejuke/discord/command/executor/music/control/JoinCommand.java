@@ -21,8 +21,8 @@ import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class JoinCommand extends CommandExecutor {
 
@@ -45,7 +45,7 @@ public class JoinCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%join\n" + "Botを現在あなたが参加しているボイスチャンネルに参加させます。```";
+        return "```%prefix%join Botを現在あなたが参加しているボイスチャンネルに参加させます。```";
     }
 
     @Override

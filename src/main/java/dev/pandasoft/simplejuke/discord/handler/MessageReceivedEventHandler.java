@@ -23,9 +23,9 @@ import dev.pandasoft.simplejuke.discord.command.BotCommandParser;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 @Slf4j
 public class MessageReceivedEventHandler extends ListenerAdapter {

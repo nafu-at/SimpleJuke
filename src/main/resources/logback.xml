@@ -24,7 +24,7 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/SimpleJuke.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/SimpleJuke-%d{yyyyMMdd}.tar.gz</fileNamePattern>
+            <fileNamePattern>logs/SimpleJuke-%d{yyyyMMdd}.log.tar.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
@@ -45,7 +45,7 @@
             <level>DEBUG</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/JDA-%d{yyyyMMdd}.tar.gz</fileNamePattern>
+            <fileNamePattern>logs/JDA-%d{yyyyMMdd}.log.tar.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
@@ -60,7 +60,7 @@
             <level>DEBUG</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/HikariCP-%d{yyyyMMdd}.tar.gz</fileNamePattern>
+            <fileNamePattern>logs/HikariCP-%d{yyyyMMdd}.log.tar.gz</fileNamePattern>
             <maxHistory>30</maxHistory>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>

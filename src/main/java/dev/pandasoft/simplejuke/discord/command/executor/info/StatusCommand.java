@@ -81,7 +81,7 @@ public class StatusCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return null;
+        return "%prefix%status Botに関する情報を表示します。";
     }
 
     @Override

@@ -37,7 +37,7 @@ public class DestroyCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "%prefix%destroy プレーヤーをリセットし、プレイリストをクリアします。";
+        return "%prefix%destroy プレーヤーをリセットしプレイリストをクリアします。";
     }
 
     @Override

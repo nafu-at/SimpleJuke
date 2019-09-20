@@ -16,8 +16,8 @@
 
 package dev.pandasoft.simplejuke.util;
 
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.MessageChannel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class MessageUtil {
     }
 
     public static long parseTimeToMillis(String time) {
-        int sec = 0;
+        int sec;
         int min = 0;
         int hrs = 0;
 

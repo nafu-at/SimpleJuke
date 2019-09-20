@@ -53,6 +53,12 @@ public class UpdateInfoReader {
             String result = response.body().string();
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
             updateInfo = mapper.readValue(result, UpdateInfo.class);
+
+            log.debug("更新情報が取得されました。現在の最新バージョンは{}です。",
+                    getUpdateInfo(0).get(0).getVersion());
+            String suffix = checkUpdate(0) ? "あります。" : "ありません。";
+            log.debug("Botの更新は" + suffix);
+            log.debug("現在のBotのバージョンは{}です。", getNowVersion());
         } catch (IOException e) {
             log.error("更新情報の取得中にエラーが発生しました。", e);
         }
@@ -73,16 +79,19 @@ public class UpdateInfoReader {
             return false;
 
         for (VersionInfo versionInfo : updateInfo.getVersions()) {
-            if (versionInfo.getLevel().getLevel() >= level)
+            if (latestVersion == null && versionInfo.getLevel().getLevel() >= level)
                 latestVersion = versionInfo;
-            if (versionInfo.getVersion().equals(VERSION))
+            if (versionInfo.getVersion().equals(getNowVersion()))
                 nowVersion = versionInfo;
         }
 
         if (latestVersion != null && nowVersion != null) {
             try {
+                log.debug("Checking update... {}({}) -> {}({})", nowVersion.getVersion(), nowVersion.getUpdateDate(),
+                        latestVersion.getVersion(), latestVersion.getUpdateDate());
                 return latestVersion.getUpdateDate().after(nowVersion.getUpdateDate());
             } catch (ParseException e) {
+                log.debug("更新日時のパースに失敗しました。", e);
                 return false;
             }
         } else {

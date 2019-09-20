@@ -44,6 +44,8 @@ public class HelpCommand extends CommandExecutor {
                     command.getChannel().sendMessage(commandHelp
                             .replaceAll("%prefix%", Main.getController().getConfig().getBasicConfig().getPrefix()))
                             .queue();
+                else
+                    command.getChannel().sendMessage("このコマンドにはヘルプが登録されていません。").queue();
             }
         }
     }

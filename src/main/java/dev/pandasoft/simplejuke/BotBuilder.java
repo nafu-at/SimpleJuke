@@ -52,9 +52,9 @@ import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import io.sentry.Sentry;
 import lavalink.client.io.jda.JdaLavalink;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
-import net.dv8tion.jda.bot.sharding.ShardManager;
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.sharding.ShardManager;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
@@ -202,7 +202,7 @@ public class BotBuilder {
         jdaLogger.setLevel(level);
         cpLogger.setLevel(level);
 
-        if (!config.getAdvancedConfig().getSentryDsn().isEmpty()) {
+        if (config.getAdvancedConfig().getSentryDsn() != null && !config.getAdvancedConfig().getSentryDsn().isEmpty()) {
             Sentry.init(config.getAdvancedConfig().getSentryDsn());
         }
 
@@ -230,7 +230,6 @@ public class BotBuilder {
                     moduleManager.disableAllModules();
                 }
             });
-
         }
         Runtime.getRuntime().addShutdownHook(shutdownHookThread);
 
@@ -259,32 +258,35 @@ public class BotBuilder {
             }
             shardManagerBuilder.addEventListeners(new GuildVoiceUpdateEventHandler());
             shardManagerBuilder.addEventListeners(new MessageReceivedEventHandler());
+
+            try {
+                if (config.getAdvancedConfig().isUseNodeServer()) {
+                    if (lavalink == null) {
+                        lavalink =
+                                new JdaLavalink(new DiscordAPIClient().getBotApplicationInfo(config.getBasicConfig().getDiscordToken()).getID(),
+                                        getShardsTotal(), this::getJdaFromId);
+                    }
+
+                    for (LavalinkConfigSection node : config.getAdvancedConfig().getNodesInfo())
+                        lavalink.addNode(node.getNodeName(), URI.create(node.getAddress()), node.getPassword());
+                    shardManagerBuilder.addEventListeners(lavalink);
+                    shardManagerBuilder.setVoiceDispatchInterceptor(lavalink.getVoiceInterceptor());
+                    log.info("LavaLink Connecting... OK!");
+                }
+            } catch (IOException e) {
+                log.error("LavaLinkのロード中にエラーが発生しました。");
+            }
+
             shardManager = shardManagerBuilder.build();
             log.info("Starting Discord Client...");
         }
 
-        try {
-            if (config.getAdvancedConfig().isUseNodeServer()) {
-                if (lavalink == null) {
-                    lavalink =
-                            new JdaLavalink(new DiscordAPIClient().getBotApplicationInfo(config.getBasicConfig().getDiscordToken()).getID(),
-                                    shardManager.getShardsTotal(), shardManager::getShardById);
-                }
-
-                for (LavalinkConfigSection node : config.getAdvancedConfig().getNodesInfo())
-                    lavalink.addNode(node.getNodeName(), URI.create(node.getAddress()), node.getPassword());
-                shardManager.addEventListener(lavalink);
-                log.info("LavaLink Connecting... OK!");
-            }
-        } catch (IOException e) {
-            log.error("LavaLinkのロード中にエラーが発生しました。");
-        }
 
         while (!shardManager.getStatus(0).equals(JDA.Status.CONNECTED)) {
             Thread.sleep(100);
         }
         log.debug("Connection Status: {} (Ping is {}ms)", shardManager.getStatus(0).toString(),
-                shardManager.getShardById(0).getPing());
+                shardManager.getShardById(0).getGatewayPing());
         log.info("Discord API Login... OK!");
 
         if (commandManager == null) {
@@ -307,5 +309,17 @@ public class BotBuilder {
 
         return new BotController(config, databaseConnector, guildSettingsManager, userDataManager, shardManager,
                 lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent, ownerUpdateAgent);
+    }
+
+    private JDA getJdaFromId(int shardId) {
+        if (shardManager != null)
+            return shardManager.getShardById(shardId);
+        return null;
+    }
+
+    private int getShardsTotal() {
+        if (shardManager != null)
+            return shardManager.getShardsTotal();
+        return 1;
     }
 }

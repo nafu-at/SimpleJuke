@@ -53,7 +53,7 @@ public class ModuleManager {
                     description = moduleLoader.loadModuleDescription(file);
                 } catch (InvalidModuleException e) {
                     log.error("モジュールのロードに失敗しました。", e);
-                    files.remove(file);
+                    iterator.remove();
                     continue iterator;
                 }
 
@@ -66,7 +66,7 @@ public class ModuleManager {
                 }
 
                 loadModule(file);
-                files.remove(file);
+                iterator.remove();
             }
         }
     }

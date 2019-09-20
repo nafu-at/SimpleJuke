@@ -16,7 +16,7 @@
 
 package dev.pandasoft.simplejuke.discord.command;
 
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.Arrays;
 import java.util.HashMap;

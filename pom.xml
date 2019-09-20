@@ -22,7 +22,7 @@
 
     <groupId>dev.pandasoft</groupId>
     <artifactId>SimpleJuke</artifactId>
-    <version>0.1.2.1</version>
+    <version>0.2.1.0</version>
 
     <build>
         <plugins>
@@ -91,6 +91,12 @@
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.1.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <charset>UTF-8</charset>
+                    <source>8</source>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -185,18 +191,18 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>3.8.3_464</version>
+            <version>4.0.0_45</version>
         </dependency>
         <!-- Replace with Lavalink -->
         <dependency>
             <groupId>com.sedmelluq</groupId>
             <artifactId>lavaplayer</artifactId>
-            <version>1.3.20</version>
+            <version>1.3.22</version>
         </dependency>
         <dependency>
             <groupId>com.github.FredBoat</groupId>
             <artifactId>Lavalink-Client</artifactId>
-            <version>8c3f0b9</version>
+            <version>9bda4ea</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
@@ -233,6 +239,12 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
         <dependency>

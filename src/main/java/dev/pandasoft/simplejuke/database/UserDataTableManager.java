@@ -16,7 +16,7 @@
 
 package dev.pandasoft.simplejuke.database;
 
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 
 import java.io.InputStream;
 import java.sql.*;

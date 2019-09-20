@@ -38,7 +38,7 @@ public class StopCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%stop\n" + "現在再生しているトラックを停止して予約されたプレイリストを削除します。```";
+        return "```%prefix%stop 現在再生しているトラックを停止して予約されたプレイリストを削除します。```";
     }
 
     @Override

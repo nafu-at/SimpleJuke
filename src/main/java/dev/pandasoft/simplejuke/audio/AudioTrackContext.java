@@ -17,8 +17,8 @@
 package dev.pandasoft.simplejuke.audio;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 
 public class AudioTrackContext {
     private final Guild guild;

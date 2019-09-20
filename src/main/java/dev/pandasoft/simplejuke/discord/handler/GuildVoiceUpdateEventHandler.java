@@ -20,25 +20,27 @@ import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
 import dev.pandasoft.simplejuke.database.entities.GuildSettings;
 import dev.pandasoft.simplejuke.util.MessageUtil;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceUpdateEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class GuildVoiceUpdateEventHandler extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event) {
-        if (event.getChannelLeft().equals(event.getGuild().getSelfMember().getVoiceState().getChannel())) {
+        if (event.getChannelLeft() != null &&
+                event.getChannelLeft().equals(event.getEntity().getGuild().getSelfMember().getVoiceState().getChannel())) {
             for (Member member : event.getChannelLeft().getMembers())
                 if (!member.getUser().isBot())
                     return;
 
-            GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(event.getGuild());
+            GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(event.getEntity().getGuild());
             if (!settings.isAutoLeave())
                 return;
 
-            MessageUtil.sendMessage(event.getGuild(), "誰も居なくなったみたいですね？");
-            GuildAudioPlayer player = Main.getController().getPlayerRegistry().getGuildAudioPlayer(event.getGuild());
+            MessageUtil.sendMessage(event.getEntity().getGuild(), "誰も居なくなったみたいですね？");
+            GuildAudioPlayer player =
+                    Main.getController().getPlayerRegistry().getGuildAudioPlayer(event.getEntity().getGuild());
             player.pause(true);
             player.leaveChannel();
         }
