@@ -36,6 +36,7 @@ import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class NowPlayingCommand extends CommandExecutor {
     }
 
     private MessageEmbed getYouTubeEmbed(GuildAudioPlayer audioPlayer) throws IOException {
-        if (Main.getController().getConfig().getAdvancedConfig().getGoogleAPIToken() == null)
+        if (StringUtils.isBlank(Main.getController().getConfig().getAdvancedConfig().getGoogleAPIToken()))
             return getDefaultEmbed(audioPlayer, YOUTUBE);
 
         YouTubeObjectItem youtubeVideo = client.getYoutubeObjects(YouTubeAPIClient.YOUTUBE_VIDEO,

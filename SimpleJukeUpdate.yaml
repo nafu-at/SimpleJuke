@@ -1,4 +1,16 @@
 versions:
+  - version: 0.2.1.0
+    title: コマンド機能の強化
+    description:
+      - "Shutdownコマンド実行時に誤操作防止用の確認コードを入力するようにしました。"
+      - "Nodesコマンドで一時的にLavaLinkノードの追加や削除をできるようにしました。"
+      - "GoogleAPIキーが未入力にも関わらずAPIとの通信を試みることでエラーが発生する不具合を修正しました。"
+      - "ファイル形式の指定が正しくなくアーカイブ化されたログファイルが開けない不具合を修正しました。"
+    knownbugs: []
+    updatedate: "2019-9-20-23:00"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v0.2.1.0/SimpleJuke.jar"
+    level: BETA
+
   - version: 0.2.0.1
     title: 依存関係の更新
     description:

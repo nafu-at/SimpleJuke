@@ -230,7 +230,6 @@ public class BotBuilder {
                     moduleManager.disableAllModules();
                 }
             });
-
         }
         Runtime.getRuntime().addShutdownHook(shutdownHookThread);
 
@@ -265,7 +264,7 @@ public class BotBuilder {
                     if (lavalink == null) {
                         lavalink =
                                 new JdaLavalink(new DiscordAPIClient().getBotApplicationInfo(config.getBasicConfig().getDiscordToken()).getID(),
-                                        getShardsTotal(), shardId -> getJdaFromId(shardId));
+                                        getShardsTotal(), this::getJdaFromId);
                     }
 
                     for (LavalinkConfigSection node : config.getAdvancedConfig().getNodesInfo())

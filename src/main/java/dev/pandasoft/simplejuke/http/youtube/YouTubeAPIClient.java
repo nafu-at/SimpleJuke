@@ -24,6 +24,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -41,7 +42,7 @@ public class YouTubeAPIClient {
 
     public YouTubeSearchResults searchVideos(@NonNull String query, String pageToken) throws IOException {
         if (!Main.getController().getConfig().getBasicConfig().getMusicSource().enableYoutube() ||
-                Main.getController().getConfig().getAdvancedConfig().getGoogleAPIToken() == null)
+                StringUtils.isBlank(Main.getController().getConfig().getAdvancedConfig().getGoogleAPIToken()))
             return null;
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(YOUTUBE_SEARCH)).newBuilder();

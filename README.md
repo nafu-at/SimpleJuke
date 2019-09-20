@@ -15,7 +15,7 @@ SimpleJukeはDiscordユーザー向けの音楽再生用Botです。
 ## 使用方法
 ### 公式ホストのBotを利用する場合
 こちらのページよりBotの招待リンクをご利用下さい。  
-https://pandasoft.dev/service/simplejuke
+<https://pandasoft.dev/service/simplejuke>
 
 ### 自分でBotをホストする場合
 データベースのセットアップは公式のドキュメントを御覧ください。
