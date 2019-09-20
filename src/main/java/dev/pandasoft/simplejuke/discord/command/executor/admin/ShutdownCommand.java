@@ -35,12 +35,13 @@ public class ShutdownCommand extends CommandExecutor {
         if (command.getArgs().length == 0) {
             String pass = RandomStringUtils.randomAlphanumeric(6);
             tempRegistry.registerTemp(command.getGuild(), pass);
-            command.getChannel().sendMessage("誤操作防止のため実行キーが生成されました。 **`" + pass + "`**を指定して実行して下さい。");
+            command.getChannel().sendMessage("誤操作防止のため実行キーが生成されました。\n" +
+                    "**`" + command.getTrigger() + " " + pass + "`**を指定して実行して下さい。").queue();
         } else {
-            if (command.getArgs()[0].equals(tempRegistry.getTempObject(command.getGuild())))
+            if (command.getArgs()[0].equals(tempRegistry.getTempObject(command.getGuild()).get(0)))
                 System.exit(0);
             else
-                command.getChannel().sendMessage("実行キーが正しくありません");
+                command.getChannel().sendMessage("実行キーが正しくありません").queue();
         }
     }
 
