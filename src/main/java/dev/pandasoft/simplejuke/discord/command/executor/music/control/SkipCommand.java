@@ -69,9 +69,9 @@ public class SkipCommand extends CommandExecutor {
     @Override
     public String help() {
         return "```%prefix%skip 現在再生中の楽曲をスキップします。\n" +
-                "%prefix%skip [track] 指定した番号の楽曲をスキップします。\n" +
-                "%prefix%skip [from-to] 指定した範囲の楽曲をスキップします。\n" +
-                "%prefix%skip [below-] 指定した番号以降の楽曲をスキップします。```";
+                "%prefix%skip <track> 指定した番号の楽曲をスキップします。\n" +
+                "%prefix%skip <from-to> 指定した範囲の楽曲をスキップします。\n" +
+                "%prefix%skip <below-> 指定した番号以降の楽曲をスキップします。```";
     }
 
     @Override

@@ -64,7 +64,7 @@ public class UserInfoCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return null;
+        return "%prefix%userinfo [userId] ユーザーに関する情報を表示します。";
     }
 
     @Override

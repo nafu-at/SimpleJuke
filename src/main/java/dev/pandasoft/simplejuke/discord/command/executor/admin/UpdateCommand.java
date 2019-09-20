@@ -136,7 +136,7 @@ public class UpdateCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%update\n" + "Botのバージョンをアップデートします。```";
+        return "```%prefix%update Botのバージョンをアップデートします。```";
     }
 
     @Override

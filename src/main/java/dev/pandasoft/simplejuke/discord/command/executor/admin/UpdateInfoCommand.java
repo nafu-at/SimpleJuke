@@ -96,7 +96,7 @@ public class UpdateInfoCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%updateinfo\n" + "Botの更新情報を表示します。```";
+        return "```%prefix%updateinfo Botの更新情報を表示します。```";
     }
 
     @Override
