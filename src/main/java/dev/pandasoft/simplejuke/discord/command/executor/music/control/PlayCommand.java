@@ -59,17 +59,17 @@ public class PlayCommand extends CommandExecutor {
             }
             audioPlayer.joinChannel(targetChannel);
         }
+        if (audioPlayer.isPaused()) {
+            audioPlayer.pause(false);
+            audioPlayer.play();
+        }
 
         if (command.getArgs().length == 0) {
-            audioPlayer.pause(false);
-
             if (!command.getMessage().getAttachments().isEmpty())
                 command.getMessage().getAttachments().forEach(attachment -> audioPlayer.loadItemOrdered(attachment.getUrl(),
                         command.getInvoker()));
         } else {
             if (URL_REGEX.matcher(command.getArgs()[0]).find()) {
-                audioPlayer.pause(false);
-
                 audioPlayer.loadItemOrdered(command.getArgs()[0], command.getInvoker());
                 if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE))
                     command.getMessage().delete().submit();
