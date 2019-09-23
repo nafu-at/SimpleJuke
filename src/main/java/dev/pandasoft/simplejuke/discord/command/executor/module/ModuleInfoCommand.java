@@ -69,7 +69,8 @@ public class ModuleInfoCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return null;
+        return "```%prefix%moduleinfo ロードされているモジュールの一覧を表示します。\n" +
+                "%prefix%moduleinfo [modulename] モジュールに関する情報を表示します。```";
     }
 
     @Override
