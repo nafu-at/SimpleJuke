@@ -1,4 +1,14 @@
 versions:
+  - version: 1.0.0.0
+    title: 再生機能に関するバグの修正とその他コードの最適化
+    description:
+      - "SkipコマンドでSingleリピートから抜け出せない問題を修正しました。"
+      - "一時停止状態かつ無接続の状態でキューが保持されたまま長時間が経過した場合にキューと再生中の楽曲の整合性が取れなくなる不具合を修正しました。"
+    knownbugs: []
+    updatedate: "2019-9-23 23:00"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v1.0.0.0/SimpleJuke.jar"
+    level: STABLE
+
   - version: 0.2.1.0
     title: コマンド機能の強化
     description:
