@@ -59,8 +59,7 @@ public class YouTubeAPIClient {
             log.debug("YouTube API Response Received: {}", response.toString());
             if (response.code() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
-                YouTubeSearchResults results = mapper.readValue(response.body().string(), YouTubeSearchResults.class);
-                return results;
+                return mapper.readValue(response.body().string(), YouTubeSearchResults.class);
             }
             return null;
         }
@@ -82,8 +81,7 @@ public class YouTubeAPIClient {
             if (response.code() == 200) {
                 log.debug("YouTube API Response Received: {}", response.toString());
                 ObjectMapper mapper = new ObjectMapper();
-                YouTubeObjects objects = mapper.readValue(response.body().string(), YouTubeObjects.class);
-                return objects;
+                return mapper.readValue(response.body().string(), YouTubeObjects.class);
             }
             return null;
         }

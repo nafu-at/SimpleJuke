@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+@Slf4j
 public class SafeTrackManager extends PlayerEventListenerAdapter {
     private final Guild guild;
     private final IPlayer player;
@@ -48,18 +49,8 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
         List<AudioTrackContext> tracks = getQueues();
 
         if (desiredNum == 0 || desiredNum > tracks.size() || (desiredNum == 1 && tracks.isEmpty())) {
-            if (player.getPlayingTrack() == null) {
-                if (queue.isEmpty()) {
-                    player.playTrack(context.getTrack());
-                } else {
-                    AudioTrackContext latestTrack = queue.poll();
-                    queue.clear();
-                    queue.add(latestTrack.makeClone());
-                    tracks.forEach(queue::add);
-                    nextTrack();
-                }
-            }
-
+            if (player.getPlayingTrack() == null)
+                player.playTrack(context.getTrack());
             queue.offer(context);
             if (Main.getController().getGuildSettingsManager().loadSettings(guild).isShuffle())
                 shuffle();
@@ -160,9 +151,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
 
         if (nowPlaying != null) {
             AudioTrack track = player.getPlayingTrack();
-            if (track == null) {
-                return null;
-            } else {
+            if (track != null) {
                 if (nowPlaying.getTrack().equals(track)) {
                     return nowPlaying;
                 } else { // 再生中のトラックと記録されているキューが一致しない場合再生中のトラックをキューの中から探す
@@ -172,9 +161,8 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
                             // 見つかった場合はその前までのトラックを削除
                             while (nom > 0) {
                                 //削除中にキューが空になった場合はnullを返す。
-                                if (queue.poll() == null)
-                                    return null;
-                                return nowPlaying;
+                                if (queue.poll() != null)
+                                    return nowPlaying;
                             }
                         }
                     }
@@ -193,18 +181,23 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
         return new ArrayList<>(queue);
     }
 
+    synchronized void safeStart() {
+        if (player.getPlayingTrack() == null) {
+            List<AudioTrackContext> tracks = getQueues();
+            if (!queue.isEmpty()) {
+                AudioTrackContext latestTrack = queue.poll();
+                queue.clear();
+                queue.add(latestTrack.makeClone());
+                tracks.forEach(queue::add);
+                nextTrack();
+            }
+        }
+    }
+
     synchronized void nextTrack() {
         AudioTrackContext track = queue.peek();
-        if (track != null) {
-            List<AudioTrackContext> tracks = getQueues();
-            if (player.getPlayingTrack() == null) {
-                queue.remove(track);
-                queue.clear();
-                queue.add(track.makeClone());
-                tracks.forEach(queue::add);
-            }
+        if (track != null)
             player.playTrack(track.getTrack());
-        }
     }
 
     @Override

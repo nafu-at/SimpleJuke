@@ -71,7 +71,7 @@ public class MessageUtil {
             min = Integer.parseInt(split[0]);
             sec = Integer.parseInt(split[1]);
         } else {
-            sec = Integer.parseInt(split[0].replaceAll(":", ""));
+            sec = Integer.parseInt(split[0].replace(":", ""));
         }
 
         return (hrs * 3600L + min * 60L + sec) * 1000L;

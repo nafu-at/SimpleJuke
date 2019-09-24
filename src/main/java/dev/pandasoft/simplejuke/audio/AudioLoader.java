@@ -55,10 +55,7 @@ public class AudioLoader implements AudioLoadResultHandler {
         if (!checkAudioSorce(track))
             return;
 
-        if (desiredNum == 0)
-            audioPlayer.play(new AudioTrackContext(invoker.getGuild(), invoker, track));
-        else
-            audioPlayer.play(new AudioTrackContext(invoker.getGuild(), invoker, track), desiredNum);
+        audioPlayer.play(new AudioTrackContext(invoker.getGuild(), invoker, track), desiredNum);
 
         List<AudioTrackContext> tracks = audioPlayer.getQueues();
         log.debug("Track Queued. Total: {}, TracksInfo: {}", tracks.size(), tracks.toString());

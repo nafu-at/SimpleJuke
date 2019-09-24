@@ -59,21 +59,19 @@ public class PlayCommand extends CommandExecutor {
             }
             audioPlayer.joinChannel(targetChannel);
         }
-        if (audioPlayer.isPaused()) {
-            audioPlayer.pause(false);
-            audioPlayer.play();
-        }
+        audioPlayer.play();
 
         if (command.getArgs().length == 0) {
+            // 添付ファイルが有る場合は添付ファイルを再生
             if (!command.getMessage().getAttachments().isEmpty())
                 command.getMessage().getAttachments().forEach(attachment -> audioPlayer.loadItemOrdered(attachment.getUrl(),
                         command.getInvoker()));
         } else {
-            if (URL_REGEX.matcher(command.getArgs()[0]).find()) {
+            if (URL_REGEX.matcher(command.getArgs()[0]).find()) { // 指定された引数がURLの場合はURLのトラックを再生
                 audioPlayer.loadItemOrdered(command.getArgs()[0], command.getInvoker());
                 if (command.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE))
                     command.getMessage().delete().submit();
-            } else if (NOMBER_REGEX.matcher(command.getArgs()[0]).find()) {
+            } else if (NOMBER_REGEX.matcher(command.getArgs()[0]).find()) { // 指定された引数が数字の場合は保存された検索結果を取得して指定されたトラックを再生
                 List<Object> objects = tempRegistry.removeTemp(command.getGuild());
                 if (objects.get(0) instanceof YouTubeSearchResults
                         && objects.get(1) instanceof Message
@@ -92,11 +90,12 @@ public class PlayCommand extends CommandExecutor {
                 }
             } else {
                 File file = new File(command.getArgs()[0]);
-                if (file.exists()) {
+                if (file.exists()) { // 入力された引数がファイルパスかを確認しファイルが存在する場合再生
                     audioPlayer.loadItemOrdered(file.getPath(), command.getInvoker());
                     return;
                 }
 
+                // それ以外は入力された単語をYouTubeで検索
                 StringBuilder builder = new StringBuilder();
                 for (String arg : command.getArgs())
                     builder.append(arg + " ");

@@ -42,8 +42,7 @@ public class InterruptCommand extends CommandExecutor {
                 }
                 audioPlayer.joinChannel(targetChannel);
             }
-
-            audioPlayer.pause(false);
+            audioPlayer.play();
 
             try {
                 audioPlayer.loadItemOrdered(command.getArgs()[0], command.getInvoker(),

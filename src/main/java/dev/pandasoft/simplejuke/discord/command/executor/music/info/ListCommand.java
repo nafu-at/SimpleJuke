@@ -50,6 +50,7 @@ public class ListCommand extends CommandExecutor {
                         page = 1;
                     }
                 } catch (NumberFormatException e) {
+                    command.getChannel().sendMessage("ページ数は数字で指定してください。").queue();
                 }
             }
 

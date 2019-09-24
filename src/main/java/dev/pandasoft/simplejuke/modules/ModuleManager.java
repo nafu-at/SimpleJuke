@@ -42,7 +42,6 @@ public class ModuleManager {
      * 見つかったすべてのモジュールをロードします。
      */
     public void loadAllModules() {
-        files:
         while (!files.isEmpty()) {
             Iterator<File> iterator = files.iterator();
             iterator:
@@ -58,7 +57,6 @@ public class ModuleManager {
                 }
 
                 if (description.getLoadBefore() != null && !description.getLoadBefore().isEmpty()) {
-                    module:
                     for (String module : description.getLoadBefore()) {
                         if (moduleRegistry.getModule(module) == null && files.size() != 1)
                             continue iterator;
