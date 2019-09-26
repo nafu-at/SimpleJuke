@@ -141,7 +141,8 @@ public class GuildAudioPlayer {
     }
 
     public void play() {
-        trackManager.nextTrack();
+        player.setPaused(false);
+        trackManager.safeStart();
     }
 
     public void play(AudioTrackContext track) {
@@ -176,9 +177,12 @@ public class GuildAudioPlayer {
      * プレイヤーの一時停止状況を切り替えます。
      */
     public void pause() {
-        player.setPaused(!player.isPaused());
-        if (!player.isPaused() && player.getPlayingTrack() == null)
-            trackManager.skip();
+        if (player.isPaused()) {
+            player.setPaused(false);
+            trackManager.safeStart();
+        } else {
+            player.setPaused(true);
+        }
     }
 
     /**

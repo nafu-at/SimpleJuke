@@ -32,7 +32,7 @@ public class HelpCommand extends CommandExecutor {
     public void onInvoke(BotCommand command) {
         if (command.getArgs().length == 0) {
             command.getChannel().sendMessage(
-                    HELP_MESSAGE.replaceAll("%prefix%", Main.getController().getConfig().getBasicConfig().getPrefix())).queue();
+                    HELP_MESSAGE.replace("%prefix%", Main.getController().getConfig().getBasicConfig().getPrefix())).queue();
         } else {
             CommandExecutor executor = Main.getController().getCommandManager().getExecutor(command.getArgs()[0]);
             if (executor == null) {
@@ -42,7 +42,7 @@ public class HelpCommand extends CommandExecutor {
                 String commandHelp = executor.help();
                 if (commandHelp != null)
                     command.getChannel().sendMessage(commandHelp
-                            .replaceAll("%prefix%", Main.getController().getConfig().getBasicConfig().getPrefix()))
+                            .replace("%prefix%", Main.getController().getConfig().getBasicConfig().getPrefix()))
                             .queue();
                 else
                     command.getChannel().sendMessage("このコマンドにはヘルプが登録されていません。").queue();

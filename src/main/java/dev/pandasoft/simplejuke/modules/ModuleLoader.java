@@ -67,7 +67,7 @@ public class ModuleLoader {
      * @throws InvalidModuleException     モジュールの形式が正しくない場合にスローされます。
      * @throws UnknownDependencyException 指定されている依存関係が解決できない場合にスローされます。
      */
-    public BotModule loadModule(File file) throws InvalidModuleException, UnknownDependencyException {
+    public BotModule loadModule(File file) throws InvalidModuleException {
         if (!file.exists())
             throw new InvalidModuleException(file.getPath() + "は存在しません！");
 
@@ -109,7 +109,7 @@ public class ModuleLoader {
      * @throws InvalidModuleException      モジュールの形式が正しくない場合にスローされます。
      * @throws InvalidDescriptionException 指定されている依存関係が解決できない場合にスローされます。
      */
-    public ModuleDescription loadModuleDescription(File file) throws InvalidModuleException, InvalidDescriptionException {
+    public ModuleDescription loadModuleDescription(File file) throws InvalidModuleException {
         if (!file.exists())
             throw new InvalidModuleException(file.getPath() + "は存在しません！");
 

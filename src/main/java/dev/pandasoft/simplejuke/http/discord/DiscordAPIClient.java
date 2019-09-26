@@ -40,8 +40,7 @@ public class DiscordAPIClient {
             log.debug("Discord API Response Received: Header{}", response.toString());
             if (response.code() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
-                DiscordAppInfo appInfo = mapper.readValue(response.body().string(), DiscordAppInfo.class);
-                return appInfo;
+                return mapper.readValue(response.body().string(), DiscordAppInfo.class);
             }
             return null;
         }

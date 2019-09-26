@@ -33,7 +33,8 @@ public class SeekCommand extends CommandExecutor {
     public void onInvoke(BotCommand command) {
         if (command.getArgs().length != 0) {
             GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
-            audioPlayer.seek(MessageUtil.parseTimeToMillis(command.getArgs()[0]));
+            if (audioPlayer.getNowPlaying() != null)
+                audioPlayer.seek(MessageUtil.parseTimeToMillis(command.getArgs()[0]));
         }
     }
 
