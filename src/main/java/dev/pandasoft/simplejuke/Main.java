@@ -57,6 +57,7 @@ public class Main {
         ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
         ses.scheduleAtFixedRate(controller.getUpdateAgent(), 0, 1, TimeUnit.HOURS);
         ses.scheduleAtFixedRate(controller.getOwnerUpdateAgent(), 0, 1, TimeUnit.DAYS);
+        ses.scheduleAtFixedRate(controller.getPlayerChecker(), 0, 30, TimeUnit.MINUTES);
     }
 
     public static BotController getController() {

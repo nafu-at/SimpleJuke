@@ -48,6 +48,7 @@ import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
 import dev.pandasoft.simplejuke.modules.ModuleManager;
 import dev.pandasoft.simplejuke.modules.ModuleRegistry;
 import dev.pandasoft.simplejuke.util.GuildOwnerUpdateAgent;
+import dev.pandasoft.simplejuke.util.HibernatePlayerChecker;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import io.sentry.Sentry;
 import lavalink.client.io.jda.JdaLavalink;
@@ -83,6 +84,7 @@ public class BotBuilder {
     protected ModuleManager moduleManager = null;
     protected StateUpdateAgent updateAgent = null;
     protected GuildOwnerUpdateAgent ownerUpdateAgent = null;
+    protected HibernatePlayerChecker hibernatePlayerChecker = null;
 
     protected final List<CommandExecutor> getDefaultCommands() {
         List<CommandExecutor> defaultCommands = new ArrayList<>();
@@ -179,6 +181,11 @@ public class BotBuilder {
 
     public BotBuilder setOwnerUpdateAgent(GuildOwnerUpdateAgent ownerUpdateAgent) {
         this.ownerUpdateAgent = ownerUpdateAgent;
+        return this;
+    }
+
+    public BotBuilder setHibernatePlayerChecker(HibernatePlayerChecker hibernatePlayerChecker) {
+        this.hibernatePlayerChecker = hibernatePlayerChecker;
         return this;
     }
 
@@ -295,20 +302,21 @@ public class BotBuilder {
 
         getDefaultCommands().forEach(executor -> commandManager.getCommandRegistry(null).registerCommand(executor));
 
-        if (playerRegistry == null) {
+        if (playerRegistry == null)
             playerRegistry = new AudioPlayerRegistry(new DefaultAudioPlayerManager());
-        }
 
-        if (updateAgent == null) {
+        if (updateAgent == null)
             updateAgent = new StateUpdateAgent();
-        }
 
-        if (ownerUpdateAgent == null) {
+        if (ownerUpdateAgent == null)
             ownerUpdateAgent = new GuildOwnerUpdateAgent();
-        }
+
+        if (hibernatePlayerChecker == null)
+            hibernatePlayerChecker = new HibernatePlayerChecker();
 
         return new BotController(config, databaseConnector, guildSettingsManager, userDataManager, shardManager,
-                lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent, ownerUpdateAgent);
+                lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent,
+                ownerUpdateAgent, hibernatePlayerChecker);
     }
 
     private JDA getJdaFromId(int shardId) {

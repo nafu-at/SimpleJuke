@@ -30,6 +30,7 @@ import net.dv8tion.jda.api.entities.Member;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,6 +40,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
     private final Guild guild;
     private final IPlayer player;
     private final BlockingQueue<AudioTrackContext> queue = new LinkedBlockingQueue<>();
+    private Date lastPlayed;
 
     public SafeTrackManager(Guild guild, IPlayer player) {
         this.guild = guild;
@@ -152,7 +154,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
         if (nowPlaying != null) {
             AudioTrack track = player.getPlayingTrack();
             if (track != null) {
-                if (nowPlaying.getTrack().equals(track)) {
+                if (nowPlaying.getTrack().getIdentifier().equals(track.getIdentifier())) {
                     return nowPlaying;
                 } else { // 再生中のトラックと記録されているキューが一致しない場合再生中のトラックをキューの中から探す
                     List<AudioTrackContext> queues = getQueues();
@@ -194,10 +196,16 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
         }
     }
 
+    public Date getLastPlayed() {
+        return lastPlayed;
+    }
+
     synchronized void nextTrack() {
         AudioTrackContext track = queue.peek();
-        if (track != null)
+        if (track != null) {
             player.playTrack(track.getTrack());
+            lastPlayed = new Date();
+        }
     }
 
     @Override

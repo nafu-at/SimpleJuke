@@ -18,18 +18,26 @@ package dev.pandasoft.simplejuke.discord.command.executor.info;
 
 import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary;
 import dev.pandasoft.simplejuke.Main;
+import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
+import dev.pandasoft.simplejuke.util.HibernatePlayerChecker;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import dev.pandasoft.simplejuke.util.UpdateInfoReader;
+import jdk.internal.agent.resources.agent;
 
 import java.lang.management.ManagementFactory;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public class StatusCommand extends CommandExecutor {
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
 
     public StatusCommand(String name, String... aliases) {
         super(name, aliases);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
     }
 
     private static String formatTime(long millis) {
@@ -55,6 +63,7 @@ public class StatusCommand extends CommandExecutor {
         long useing = total - free;
         long uptime = ManagementFactory.getRuntimeMXBean().getUptime();
         StateUpdateAgent agent = Main.getController().getUpdateAgent();
+        HibernatePlayerChecker checker = Main.getController().getPlayerChecker();
 
         StringBuilder builder = new StringBuilder();
         builder.append("このBotは起動されてから " + formatTime(uptime) + "間実行されています。\n");
@@ -73,9 +82,17 @@ public class StatusCommand extends CommandExecutor {
         builder.append("SimpleJuke:           " + UpdateInfoReader.getNowVersion() + "\n");
         builder.append("LavaPlayer:           " + PlayerLibrary.VERSION + "\n\n");
         builder.append("====== Agent Info ======\n");
-        builder.append("StateUpdateAgent: " + agent.getLatestUpdate().toString() + "\n");
-        builder.append("```");
+        builder.append("StateUpdateAgent: " + dateFormat.format(agent.getLatestUpdate()) + "\n");
+        builder.append("HibernatePlayerChecker: " + dateFormat.format(checker.getLatestCheck()) + "\n");
 
+        if (Main.getController().getConfig().getAdvancedConfig().getLogLevel().toLowerCase().equals("debug")) {
+            GuildAudioPlayer audioPlayer =
+                    Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
+            builder.append("====== Debug Info ======\n");
+            builder.append("isPlaying: " + audioPlayer.isPlaying() + "\n");
+            builder.append("isPausing: " + audioPlayer.isPaused() + "\n");
+        }
+        builder.append("```");
         command.getChannel().sendMessage(builder.toString()).queue();
     }
 

@@ -18,6 +18,7 @@ package dev.pandasoft.simplejuke.util;
 
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Guild;
+import org.slf4j.MDC;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -53,6 +54,7 @@ public class ExceptionUtil {
         StringBuilder sb = new StringBuilder();
         for (String msg : message)
             sb.append(msg + "\n");
+        MDC.put("GuildId,", guild.getId());
         log.error(sb.toString(), throwable);
     }
 }
