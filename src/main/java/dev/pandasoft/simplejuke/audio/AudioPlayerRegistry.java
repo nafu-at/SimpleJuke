@@ -22,11 +22,13 @@ import dev.pandasoft.simplejuke.util.MessageUtil;
 import lavalink.client.io.Link;
 import net.dv8tion.jda.api.entities.Guild;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AudioPlayerRegistry {
-    private final Map<Long, GuildAudioPlayer> players = new HashMap<>();
+    private final Map<Guild, GuildAudioPlayer> players = new HashMap<>();
     private final AudioPlayerManager playerManager;
 
     public AudioPlayerRegistry(AudioPlayerManager playerManager) {
@@ -36,7 +38,7 @@ public class AudioPlayerRegistry {
     }
 
     public synchronized GuildAudioPlayer getGuildAudioPlayer(Guild guild) {
-        GuildAudioPlayer player = players.computeIfAbsent(guild.getIdLong(),
+        GuildAudioPlayer player = players.computeIfAbsent(guild,
                 key -> new GuildAudioPlayer(playerManager, guild));
         if (player.getSendHandler() != null)
             guild.getAudioManager().setSendingHandler(player.getSendHandler());
@@ -46,7 +48,10 @@ public class AudioPlayerRegistry {
     public synchronized void destroyPlayer(Guild guild) {
         GuildAudioPlayer player = players.get(guild.getIdLong());
         if (player != null) {
-            if (player.getLinkStatus() == Link.State.DESTROYED) {
+            if (player.getLinkStatus() == null) {
+                player.stop();
+                player.leaveChannel();
+            } else if (player.getLinkStatus() == Link.State.DESTROYED) {
                 MessageUtil.sendMessage(guild, "プレイヤーは既に破棄されています。この問題は通常発生しません。\n" +
                         "プレイヤーは何もせず削除されます。");
             } else {
@@ -54,5 +59,9 @@ public class AudioPlayerRegistry {
             }
             players.remove(guild.getIdLong());
         }
+    }
+
+    public synchronized List<GuildAudioPlayer> getPlayers() {
+        return new ArrayList<>(players.values());
     }
 }

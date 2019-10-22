@@ -27,6 +27,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
+import java.util.Date;
 import java.util.List;
 
 public class GuildAudioPlayer {
@@ -123,7 +124,7 @@ public class GuildAudioPlayer {
     /**
      * 再生中のトラックを停止してノードとの接続を切断します。
      */
-    public void destroy() {
+    protected void destroy() {
         if (link != null) {
             stop();
             player.removeListener(trackManager);
@@ -244,5 +245,14 @@ public class GuildAudioPlayer {
      */
     public void setVolume(int volume) {
         player.setVolume(volume);
+    }
+
+    /**
+     * 最後にトラックを再生した時間を返します。
+     *
+     * @return 最後にトラックを再生した時間
+     */
+    public Date getLastPlayed() {
+        return trackManager.getLastPlayed();
     }
 }

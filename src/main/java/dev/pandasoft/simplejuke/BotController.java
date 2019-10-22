@@ -25,6 +25,7 @@ import dev.pandasoft.simplejuke.discord.command.CommandManager;
 import dev.pandasoft.simplejuke.modules.ModuleManager;
 import dev.pandasoft.simplejuke.modules.ModuleRegistry;
 import dev.pandasoft.simplejuke.util.GuildOwnerUpdateAgent;
+import dev.pandasoft.simplejuke.util.HibernatePlayerChecker;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import dev.pandasoft.simplejuke.util.UpdateInfoReader;
 import lavalink.client.io.jda.JdaLavalink;
@@ -45,13 +46,15 @@ public class BotController {
     protected final ModuleManager moduleManager;
     protected final StateUpdateAgent updateAgent;
     protected final GuildOwnerUpdateAgent ownerUpdateAgent;
+    protected final HibernatePlayerChecker playerChecker;
     protected final UpdateInfoReader infoReader;
 
     protected BotController(SimpleJukeConfig config, DatabaseConnector sqlConnector,
                             GuildSettingsManager guildSettingsManager, UserDataManager userDataManager,
                             ShardManager shardManager, JdaLavalink lavalink, CommandManager commandManager,
                             AudioPlayerRegistry playerRegistry, ModuleRegistry moduleRegistry,
-                            ModuleManager moduleManager, StateUpdateAgent updateAgent, GuildOwnerUpdateAgent ownerUpdateAgent) {
+                            ModuleManager moduleManager, StateUpdateAgent updateAgent,
+                            GuildOwnerUpdateAgent ownerUpdateAgent, HibernatePlayerChecker playerChecker) {
         this.config = config;
         this.databaseConnector = sqlConnector;
         this.guildSettingsManager = guildSettingsManager;
@@ -64,6 +67,7 @@ public class BotController {
         this.moduleManager = moduleManager;
         this.updateAgent = updateAgent;
         this.ownerUpdateAgent = ownerUpdateAgent;
+        this.playerChecker = playerChecker;
         this.infoReader = new UpdateInfoReader(config.getAdvancedConfig().getUpdateInfoUrl());
     }
 
@@ -113,6 +117,10 @@ public class BotController {
 
     public GuildOwnerUpdateAgent getOwnerUpdateAgent() {
         return ownerUpdateAgent;
+    }
+
+    public HibernatePlayerChecker getPlayerChecker() {
+        return playerChecker;
     }
 
     public UpdateInfoReader getInfoReader() {
