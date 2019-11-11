@@ -63,7 +63,12 @@ public class ListCommand extends CommandExecutor {
                 return;
             }
 
-            sb.append("**現在" + tracks.size() + "曲がキューに追加されています。** `[" + page + "/" + listPage + "]`");
+            long totalTime = 0;
+            for (AudioTrackContext context : tracks)
+                totalTime += context.getTrack().getDuration();
+
+            sb.append("**現在" + tracks.size() + "曲がキューに追加されています。** `[" + page + "/" + listPage + "]`" +
+                    " `(" + MessageUtil.formatTime(totalTime) + ")`");
             for (int count = range * page - range + 1; count <= range * page; count++) {
                 if (tracks.size() >= count) {
                     AudioTrackContext track = tracks.get(count - 1);

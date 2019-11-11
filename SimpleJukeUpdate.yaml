@@ -1,4 +1,18 @@
 versions:
+  - version: 1.1.0.0-BETA
+    title: 様々なバグの修正と新機能の実装
+    description:
+      - "プレイヤーを自動的に破棄する機能が正常に動作しない不具合を修正しました。"
+      - "再生エラーの原因を分かりやすくしました。"
+      - "Listコマンドを実行した際にすべてのトラックの合計時間を表示するようにしました。"
+      - "Timeコマンドで現在再生中のトラックの再生時間を表示する機能を追加しました。"
+      - "Tempディレクトリに関するエラーに対応するためTempの場所を変更しました。"
+      - "Moduleから他のModuleを取得できるようにしました。"
+    knownbugs: []
+    updatedate: "2019-11-11 17:00"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v1.1.0.0-BETA/SimpleJuke.jar"
+    level: BETA
+
   - version: 1.0.1.0
     title: 様々なバグの修正
     description:

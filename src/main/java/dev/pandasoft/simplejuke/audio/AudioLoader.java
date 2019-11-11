@@ -16,6 +16,7 @@
 
 package dev.pandasoft.simplejuke.audio;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioTrack;
 import com.sedmelluq.discord.lavaplayer.source.http.HttpAudioTrack;
@@ -32,6 +33,7 @@ import dev.pandasoft.simplejuke.config.MusicSourceSection;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.util.ArrayList;
@@ -89,7 +91,26 @@ public class AudioLoader implements AudioLoadResultHandler {
 
     @Override
     public void loadFailed(FriendlyException exception) {
-        ExceptionUtil.sendStackTrace(audioPlayer.getGuild(), exception, "トラックの読み込みに失敗しました。");
+        Guild guild = audioPlayer.getGuild();
+        Throwable throwable = exception.getCause();
+        if (throwable == null) {
+            ExceptionUtil.sendStackTrace(audioPlayer.getGuild(), exception, "トラックの読み込みに失敗しました。");
+        } else if (throwable instanceof JsonParseException) {
+            ExceptionUtil.sendStackTrace(guild, exception, "YouTubeに対する接続が遮断された可能性があります。\n" +
+                    "あなたがこのBotの運営者ではない場合は運営者にこのエラーを伝えてください。");
+        } else switch (throwable.getMessage()) {
+            case "This video cannot be viewed anonymously.":
+                ExceptionUtil.sendStackTrace(guild, false, exception, "この動画はこのBotでは再生することができません。");
+                break;
+
+            case "This url does not appear to be a playable track.":
+                ExceptionUtil.sendStackTrace(guild, false, exception, "このURLは再生可能なトラックではありません！");
+                break;
+
+            default:
+                ExceptionUtil.sendStackTrace(audioPlayer.getGuild(), exception, "トラックの読み込みに失敗しました。");
+                break;
+        }
     }
 
     private boolean checkAudioSorce(AudioTrack track) {

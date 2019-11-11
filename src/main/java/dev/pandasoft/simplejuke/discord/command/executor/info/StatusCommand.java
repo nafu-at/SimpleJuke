@@ -25,10 +25,8 @@ import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.util.HibernatePlayerChecker;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import dev.pandasoft.simplejuke.util.UpdateInfoReader;
-import jdk.internal.agent.resources.agent;
 
 import java.lang.management.ManagementFactory;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 

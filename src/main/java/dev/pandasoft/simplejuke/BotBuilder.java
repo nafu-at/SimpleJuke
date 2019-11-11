@@ -42,6 +42,7 @@ import dev.pandasoft.simplejuke.discord.command.executor.module.ModuleInfoComman
 import dev.pandasoft.simplejuke.discord.command.executor.music.control.*;
 import dev.pandasoft.simplejuke.discord.command.executor.music.info.ListCommand;
 import dev.pandasoft.simplejuke.discord.command.executor.music.info.NowPlayingCommand;
+import dev.pandasoft.simplejuke.discord.command.executor.music.info.TimeCommand;
 import dev.pandasoft.simplejuke.discord.handler.GuildVoiceUpdateEventHandler;
 import dev.pandasoft.simplejuke.discord.handler.MessageReceivedEventHandler;
 import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
@@ -110,6 +111,7 @@ public class BotBuilder {
         defaultCommands.add(new SkipCommand("skip", "sk"));
         defaultCommands.add(new StatusCommand("status", "stats"));
         defaultCommands.add(new StopCommand("stop", "st", "s"));
+        defaultCommands.add(new TimeCommand("time", "t"));
         defaultCommands.add(new UserInfoCommand("userinfo", "user"));
         defaultCommands.add(new VolumeCommand("volume", "vol", "v"));
 

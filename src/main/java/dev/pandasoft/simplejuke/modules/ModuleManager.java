@@ -39,6 +39,16 @@ public class ModuleManager {
     }
 
     /**
+     * モジュールを取得します。
+     *
+     * @param name 取得するモジュールの名前
+     * @return モジュール
+     */
+    public BotModule getModule(String name) {
+        return moduleRegistry.getModule(name);
+    }
+
+    /**
      * 見つかったすべてのモジュールをロードします。
      */
     public void loadAllModules() {

@@ -19,6 +19,7 @@ package dev.pandasoft.simplejuke;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -37,6 +38,12 @@ public class Main {
                 "                  |_|                                \n");
         log.info("SimpleJuke v" + Main.class.getPackage().getImplementationVersion() + " 起動しています...");
 
+        // TODO: 2019/10/25 暫定的な対応
+        File tempDir = new File("temp");
+        if (!tempDir.exists())
+            tempDir.mkdirs();
+        System.setProperty("java.io.tmpdir", tempDir.getPath());
+
         try {
             controller = new BotBuilder().build();
         } catch (LoginException e) {
@@ -54,10 +61,10 @@ public class Main {
         controller.getModuleManager().enableAllModules();
         log.info("すべてのモジュールがアクティブ化されました。");
 
-        ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-        ses.scheduleAtFixedRate(controller.getUpdateAgent(), 0, 1, TimeUnit.HOURS);
-        ses.scheduleAtFixedRate(controller.getOwnerUpdateAgent(), 0, 1, TimeUnit.DAYS);
-        ses.scheduleAtFixedRate(controller.getPlayerChecker(), 0, 30, TimeUnit.MINUTES);
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(3);
+        ses.scheduleWithFixedDelay(controller.getPlayerChecker(), 0, 30, TimeUnit.MINUTES);
+        ses.scheduleWithFixedDelay(controller.getUpdateAgent(), 0, 1, TimeUnit.HOURS);
+        ses.scheduleWithFixedDelay(controller.getOwnerUpdateAgent(), 0, 1, TimeUnit.DAYS);
     }
 
     public static BotController getController() {
