@@ -1,4 +1,14 @@
 versions:
+  - version: 1.1.0.0-BETA.2
+    title: 様々なバグの修正
+    description:
+      - "検索結果の選択時に5以上の数字を入力するとエラーが発生する不具合の修正"
+      - "再生エラーの原因表示を追加しました。"
+    knownbugs: []
+    updatedate: "2019-11-11 17:00"
+    download: "https://github.com/nafu-at/SimpleJuke/releases/download/v1.1.0.0-BETA/SimpleJuke.jar"
+    level: BETA
+
   - version: 1.1.0.0-BETA
     title: 様々なバグの修正と新機能の実装
     description:

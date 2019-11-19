@@ -83,7 +83,7 @@ public class StatusCommand extends CommandExecutor {
         builder.append("StateUpdateAgent: " + dateFormat.format(agent.getLatestUpdate()) + "\n");
         builder.append("HibernatePlayerChecker: " + dateFormat.format(checker.getLatestCheck()) + "\n");
 
-        if (Main.getController().getConfig().getAdvancedConfig().getLogLevel().toLowerCase().equals("debug")) {
+        if (Main.getController().getConfig().getAdvancedConfig().getLogLevel().equalsIgnoreCase("debug")) {
             GuildAudioPlayer audioPlayer =
                     Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
             builder.append("====== Debug Info ======\n");

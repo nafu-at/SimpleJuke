@@ -107,6 +107,14 @@ public class AudioLoader implements AudioLoadResultHandler {
                 ExceptionUtil.sendStackTrace(guild, false, exception, "このURLは再生可能なトラックではありません！");
                 break;
 
+            case "This playlist is private.":
+                ExceptionUtil.sendStackTrace(guild, false, exception, "このプレイリストは非公開です。");
+                break;
+
+            case "The uploader has not made this video available in your country.":
+                ExceptionUtil.sendStackTrace(guild, false, exception, "この動画はこの国では再生することができません！");
+                break;
+
             default:
                 ExceptionUtil.sendStackTrace(audioPlayer.getGuild(), exception, "トラックの読み込みに失敗しました。");
                 break;
