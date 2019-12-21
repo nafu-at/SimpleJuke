@@ -64,7 +64,7 @@ public class NowPlayingCommand extends CommandExecutor {
                 if (audioTrack instanceof YoutubeAudioTrack) {
                     try {
                         command.getChannel().sendMessage(getYouTubeEmbed(audioPlayer)).queue();
-                    } catch (IOException e) {
+                    } catch (IOException | NullPointerException e) {
                         ExceptionUtil.sendStackTrace(command.getGuild(), e, "動画情報の取得に失敗しました。");
                     }
                 } else if (audioTrack instanceof SoundCloudAudioTrack) {
@@ -86,7 +86,7 @@ public class NowPlayingCommand extends CommandExecutor {
         }
     }
 
-    private MessageEmbed getYouTubeEmbed(GuildAudioPlayer audioPlayer) throws IOException {
+    private MessageEmbed getYouTubeEmbed(GuildAudioPlayer audioPlayer) throws IOException, NullPointerException {
         if (StringUtils.isBlank(Main.getController().getConfig().getAdvancedConfig().getGoogleAPIToken()))
             return getDefaultEmbed(audioPlayer, YOUTUBE);
 

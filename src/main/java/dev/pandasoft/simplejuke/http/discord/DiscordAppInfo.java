@@ -16,8 +16,10 @@
 
 package dev.pandasoft.simplejuke.http.discord;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class DiscordAppInfo {
     private boolean botPublic;
     private boolean botRequireCodeGrant;

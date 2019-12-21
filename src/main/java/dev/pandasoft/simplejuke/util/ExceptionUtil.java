@@ -31,6 +31,10 @@ public class ExceptionUtil {
     }
 
     public static void sendStackTrace(Guild guild, Throwable throwable, String... message) {
+        sendStackTrace(guild, true, throwable, message);
+    }
+
+    public static void sendStackTrace(Guild guild, Boolean toLog, Throwable throwable, String... message) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         throwable.printStackTrace(printWriter);
@@ -42,8 +46,8 @@ public class ExceptionUtil {
         for (String msg : message)
             builder.append(msg + "\n");
 
-        if (trace.length() > 1800)
-            trace = trace.substring(0, 1800) + " [...}";
+        if (trace.length() > 1700)
+            trace = trace.substring(0, 1700) + " [...]";
 
         builder.append("```");
         builder.append(trace);
@@ -51,10 +55,12 @@ public class ExceptionUtil {
 
         MessageUtil.sendMessage(guild, builder.toString());
 
-        StringBuilder sb = new StringBuilder();
-        for (String msg : message)
-            sb.append(msg + "\n");
-        MDC.put("GuildId,", guild.getId());
-        log.error(sb.toString(), throwable);
+        if (toLog) {
+            StringBuilder sb = new StringBuilder();
+            for (String msg : message)
+                sb.append(msg + "\n");
+            MDC.put("GuildId", guild.getId());
+            log.error(sb.toString(), throwable);
+        }
     }
 }

@@ -69,7 +69,7 @@ public class UserDataManager {
                 ownerId =
                         new DiscordAPIClient().getBotApplicationInfo(Main.getController().getConfig().getBasicConfig().getDiscordToken()).getOwner().getID();
             } catch (IOException e) {
-                log.error("Bot情報の取得中にエラーが発生しました。");
+                log.error("Bot情報の取得中にエラーが発生しました。", e);
             }
 
             if (ownerId.equals(member.getUser().getId()))
@@ -83,7 +83,7 @@ public class UserDataManager {
             try {
                 setUserPermission(member, permission);
             } catch (SQLException | IOException e) {
-                log.error("ユーザーデータの更新中にエラーが発生しました。");
+                log.error("ユーザーデータの更新中にエラーが発生しました。", e);
             }
         }
         return permission;

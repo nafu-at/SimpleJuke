@@ -39,7 +39,6 @@ public class JoinCommand extends CommandExecutor {
             command.getChannel().sendMessage("ボイスチャンネルに接続してから実行して下さい。").queue();
         } else {
             audioPlayer.joinChannel(targetChannel);
-            audioPlayer.setVolume(Main.getController().getGuildSettingsManager().loadSettings(guild).getVolume());
         }
     }
 

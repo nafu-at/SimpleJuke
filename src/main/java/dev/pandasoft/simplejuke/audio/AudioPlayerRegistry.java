@@ -46,7 +46,7 @@ public class AudioPlayerRegistry {
     }
 
     public synchronized void destroyPlayer(Guild guild) {
-        GuildAudioPlayer player = players.get(guild.getIdLong());
+        GuildAudioPlayer player = players.get(guild);
         if (player != null) {
             if (player.getLinkStatus() == null) {
                 player.stop();
@@ -57,7 +57,7 @@ public class AudioPlayerRegistry {
             } else {
                 player.destroy();
             }
-            players.remove(guild.getIdLong());
+            players.remove(guild);
         }
     }
 

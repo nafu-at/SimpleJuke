@@ -25,10 +25,8 @@ import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.util.HibernatePlayerChecker;
 import dev.pandasoft.simplejuke.util.StateUpdateAgent;
 import dev.pandasoft.simplejuke.util.UpdateInfoReader;
-import jdk.internal.agent.resources.agent;
 
 import java.lang.management.ManagementFactory;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
@@ -85,7 +83,7 @@ public class StatusCommand extends CommandExecutor {
         builder.append("StateUpdateAgent: " + dateFormat.format(agent.getLatestUpdate()) + "\n");
         builder.append("HibernatePlayerChecker: " + dateFormat.format(checker.getLatestCheck()) + "\n");
 
-        if (Main.getController().getConfig().getAdvancedConfig().getLogLevel().toLowerCase().equals("debug")) {
+        if (Main.getController().getConfig().getAdvancedConfig().getLogLevel().equalsIgnoreCase("debug")) {
             GuildAudioPlayer audioPlayer =
                     Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
             builder.append("====== Debug Info ======\n");

@@ -52,7 +52,8 @@ public class VolumeCommand extends CommandExecutor {
                 log.error("ギルド固有設定の保存中にエラーが発生しました。", e);
             }
         }
-        command.getChannel().sendMessage("現在の音量は **" + audioPlayer.getVolume() + "%** です。").queue();
+        command.getChannel().sendMessage("現在の音量は **" +
+                Main.getController().getGuildSettingsManager().loadSettings(command.getGuild()).getVolume() + "%** です。").queue();
     }
 
     @Override

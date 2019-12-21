@@ -8,8 +8,7 @@ SimpleJukeはDiscordユーザー向けの音楽再生用Botです。
 ## 動作要項
 - [x] Windows, MacOS, Linuxなどの一般的なPC用OS
 - [x] Java11以降の実行環境
-- [x] MariaDB 5.5以降
-- [x] MySQL 5.5以降
+- [x] MariaDB 5.5以降 若しくは MySQL 5.5以降
 - [x] Discordアカウント
 
 ## 使用方法

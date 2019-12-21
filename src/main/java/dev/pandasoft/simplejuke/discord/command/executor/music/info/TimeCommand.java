@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package dev.pandasoft.simplejuke.discord.command.executor.music.control;
+package dev.pandasoft.simplejuke.discord.command.executor.music.info;
 
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import dev.pandasoft.simplejuke.Main;
+import dev.pandasoft.simplejuke.audio.AudioTrackContext;
 import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
+import dev.pandasoft.simplejuke.util.MessageUtil;
 
-public class RePlayCommand extends CommandExecutor {
+public class TimeCommand extends CommandExecutor {
 
-    public RePlayCommand(String name, String... aliases) {
+    public TimeCommand(String name, String... aliases) {
         super(name, aliases);
     }
 
@@ -32,8 +35,15 @@ public class RePlayCommand extends CommandExecutor {
     public void onInvoke(BotCommand command) {
         GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
         if (audioPlayer.isPlaying()) {
-            audioPlayer.play(audioPlayer.getNowPlaying().makeClone(), 2);
-            audioPlayer.skip();
+            AudioTrackContext trackContext = audioPlayer.getNowPlaying();
+            if (trackContext != null) {
+                AudioTrack audioTrack = trackContext.getTrack();
+                command.getChannel().sendMessage("\\▶ **" + audioTrack.getInfo().title + "**を再生中です。\n" +
+                        "`" + MessageUtil.formatTime(audioTrack.getDuration()) + "` のうち `" +
+                        MessageUtil.formatTime(audioPlayer.getTrackPosition()) + "` を再生しています。\n" +
+                        "残り時間は `" + MessageUtil.formatTime(audioTrack.getDuration() - audioPlayer.getTrackPosition()) +
+                        "` です。").queue();
+            }
         } else {
             command.getChannel().sendMessage("今は何も再生されていません!").queue();
         }
@@ -41,7 +51,7 @@ public class RePlayCommand extends CommandExecutor {
 
     @Override
     public String help() {
-        return "```%prefix%requeue 再生中の曲を頭からもう一度再生します。```";
+        return "%prefix%time 現在再生中のトラックの再生時間を表示します。";
     }
 
     @Override

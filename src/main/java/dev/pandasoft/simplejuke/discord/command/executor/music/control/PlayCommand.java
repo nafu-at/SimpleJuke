@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class PlayCommand extends CommandExecutor {
     private static final Pattern URL_REGEX = Pattern.compile("^(http|https)://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$");
-    private static final Pattern NOMBER_REGEX = Pattern.compile("^[1-5]*$");
+    private static final Pattern NOMBER_REGEX = Pattern.compile("^[1-5]$");
 
     private final CommandTempRegistry tempRegistry;
 
