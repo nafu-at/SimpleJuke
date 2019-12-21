@@ -1,11 +1,14 @@
 versions:
-  - version: 1.1.0.0-BETA.2
+  - version: 1.1.0.0-BETA.1
     title: 様々なバグの修正
     description:
-      - "検索結果の選択時に5以上の数字を入力するとエラーが発生する不具合の修正"
+      - "検索結果の選択時に5以上の数字を入力するとエラーが発生する不具合の修正しました。"
+      - "UserDataManager内の一部のエラーで例外の詳細が出力されない不具合を修正しました。"
+      - "Bot情報の取得に失敗する不具合に対応しました。"
+      - "依存関係を更新しました。"
       - "再生エラーの原因表示を追加しました。"
     knownbugs: []
-    updatedate: "2019-11-11 17:00"
+    updatedate: "2019-12-22 1：00"
     download: "https://github.com/nafu-at/SimpleJuke/releases/download/v1.1.0.0-BETA/SimpleJuke.jar"
     level: BETA
 
