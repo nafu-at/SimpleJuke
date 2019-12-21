@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dev.pandasoft.simplejuke.database.entities;
+package dev.pandasoft.simplejuke.database.legacy.entities;
 
-import dev.pandasoft.simplejuke.database.GuildSettingsTableManager;
+import dev.pandasoft.simplejuke.database.legacy.GuildSettingsTableManager;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Guild;
 

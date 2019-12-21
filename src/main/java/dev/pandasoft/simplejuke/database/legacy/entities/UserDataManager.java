@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.pandasoft.simplejuke.database.entities;
+package dev.pandasoft.simplejuke.database.legacy.entities;
 
 import dev.pandasoft.simplejuke.Main;
-import dev.pandasoft.simplejuke.database.UserDataTableManager;
+import dev.pandasoft.simplejuke.database.legacy.UserDataTableManager;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
 import dev.pandasoft.simplejuke.http.discord.DiscordAPIClient;
 import lombok.extern.slf4j.Slf4j;

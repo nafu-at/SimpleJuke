@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.pandasoft.simplejuke.database.entities;
+package dev.pandasoft.simplejuke.database.legacy.entities;
 
 import dev.pandasoft.simplejuke.Main;
 

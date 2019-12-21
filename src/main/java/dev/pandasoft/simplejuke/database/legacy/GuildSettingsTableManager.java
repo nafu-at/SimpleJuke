@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package dev.pandasoft.simplejuke.database;
+package dev.pandasoft.simplejuke.database.legacy;
 
+import dev.pandasoft.simplejuke.database.DatabaseConnector;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.io.InputStream;
