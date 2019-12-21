@@ -72,7 +72,7 @@ public class AudioLoader implements AudioLoadResultHandler {
         AudioTrack firstTrack = playlist.getSelectedTrack();
         List<AudioTrack> tracks = new ArrayList<>(playlist.getTracks());
         if (firstTrack == null) {
-            if (Main.getController().getGuildSettingsManager().loadSettings(invoker.getGuild()).isShuffle())
+            if (Main.getController().getGuildSettingsTable().loadSettings(invoker.getGuild()).isShuffle())
                 Collections.shuffle(tracks);
             firstTrack = tracks.get(0);
             if (!checkAudioSorce(firstTrack))

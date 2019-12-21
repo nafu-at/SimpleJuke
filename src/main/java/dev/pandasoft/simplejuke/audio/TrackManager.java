@@ -20,7 +20,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.event.PlayerEventListenerAdapter;
-import dev.pandasoft.simplejuke.database.entities.RepeatSetting;
+import dev.pandasoft.simplejuke.database.legacy.entities.RepeatSetting;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import lavalink.client.player.IPlayer;
@@ -47,7 +47,7 @@ public class TrackManager extends PlayerEventListenerAdapter {
         if (player.getPlayingTrack() == null)
             player.playTrack(context.getTrack());
         queue.offer(context);
-        if (Main.getController().getGuildSettingsManager().loadSettings(guild).isShuffle())
+        if (Main.getController().getGuildSettingsTable().loadSettings(guild).isShuffle())
             shuffle();
     }
 
@@ -162,7 +162,7 @@ public class TrackManager extends PlayerEventListenerAdapter {
     @Override
     public void onTrackStart(IPlayer player, AudioTrack track) {
         super.onTrackStart(player, track);
-        if (Main.getController().getGuildSettingsManager().loadSettings(guild).isAnnounce())
+        if (Main.getController().getGuildSettingsTable().loadSettings(guild).isAnnounce())
             MessageUtil.sendMessage(guild, "**" + track.getInfo().title + "**の再生を開始します。");
     }
 
@@ -172,12 +172,12 @@ public class TrackManager extends PlayerEventListenerAdapter {
         AudioTrackContext latestTrack = queue.poll();
 
         if (endReason == AudioTrackEndReason.FINISHED || endReason == AudioTrackEndReason.STOPPED) {
-            if (latestTrack != null && Main.getController().getGuildSettingsManager().loadSettings(guild).getRepeat() == RepeatSetting.SINGLE) {
+            if (latestTrack != null && Main.getController().getGuildSettingsTable().loadSettings(guild).getRepeat() == RepeatSetting.SINGLE) {
                 List<AudioTrackContext> tracks = new ArrayList<>(queue);
                 queue.clear();
                 queue.add(latestTrack.makeClone());
                 tracks.forEach(queue::add);
-            } else if (latestTrack != null && Main.getController().getGuildSettingsManager().loadSettings(guild).getRepeat() == RepeatSetting.ALL) {
+            } else if (latestTrack != null && Main.getController().getGuildSettingsTable().loadSettings(guild).getRepeat() == RepeatSetting.ALL) {
                 queue.offer(latestTrack.makeClone());
             }
             nextTrack();

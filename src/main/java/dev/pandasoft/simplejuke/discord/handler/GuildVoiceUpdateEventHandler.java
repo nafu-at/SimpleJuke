@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.discord.handler;
 
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
@@ -34,7 +34,7 @@ public class GuildVoiceUpdateEventHandler extends ListenerAdapter {
                 if (!member.getUser().isBot())
                     return;
 
-            GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(event.getEntity().getGuild());
+            GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(event.getEntity().getGuild());
             if (!settings.isAutoLeave())
                 return;
 

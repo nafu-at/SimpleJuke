@@ -19,8 +19,8 @@ package dev.pandasoft.simplejuke;
 import dev.pandasoft.simplejuke.audio.AudioPlayerRegistry;
 import dev.pandasoft.simplejuke.config.SimpleJukeConfig;
 import dev.pandasoft.simplejuke.database.DatabaseConnector;
-import dev.pandasoft.simplejuke.database.entities.GuildSettingsManager;
-import dev.pandasoft.simplejuke.database.entities.UserDataManager;
+import dev.pandasoft.simplejuke.database.data.GuildSettingsTable;
+import dev.pandasoft.simplejuke.database.data.UsersTable;
 import dev.pandasoft.simplejuke.discord.command.CommandManager;
 import dev.pandasoft.simplejuke.modules.ModuleManager;
 import dev.pandasoft.simplejuke.modules.ModuleRegistry;
@@ -34,8 +34,8 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 public class BotController {
     protected final SimpleJukeConfig config;
     protected final DatabaseConnector databaseConnector;
-    protected final GuildSettingsManager guildSettingsManager;
-    protected final UserDataManager userDataManager;
+    protected final GuildSettingsTable guildSettingsTable;
+    protected final UsersTable usersTable;
 
     protected final ShardManager shardManager;
     protected final JdaLavalink lavalink;
@@ -50,15 +50,15 @@ public class BotController {
     protected final UpdateInfoReader infoReader;
 
     protected BotController(SimpleJukeConfig config, DatabaseConnector sqlConnector,
-                            GuildSettingsManager guildSettingsManager, UserDataManager userDataManager,
+                            GuildSettingsTable guildSettingsTable, UsersTable usersTable,
                             ShardManager shardManager, JdaLavalink lavalink, CommandManager commandManager,
                             AudioPlayerRegistry playerRegistry, ModuleRegistry moduleRegistry,
                             ModuleManager moduleManager, StateUpdateAgent updateAgent,
                             GuildOwnerUpdateAgent ownerUpdateAgent, HibernatePlayerChecker playerChecker) {
         this.config = config;
         this.databaseConnector = sqlConnector;
-        this.guildSettingsManager = guildSettingsManager;
-        this.userDataManager = userDataManager;
+        this.guildSettingsTable = guildSettingsTable;
+        this.usersTable = usersTable;
         this.shardManager = shardManager;
         this.lavalink = lavalink;
         this.commandManager = commandManager;
@@ -79,12 +79,12 @@ public class BotController {
         return databaseConnector;
     }
 
-    public GuildSettingsManager getGuildSettingsManager() {
-        return guildSettingsManager;
+    public GuildSettingsTable getGuildSettingsTable() {
+        return guildSettingsTable;
     }
 
-    public UserDataManager getUserDataManager() {
-        return userDataManager;
+    public UsersTable getUsersTable() {
+        return usersTable;
     }
 
     public ShardManager getShardManager() {

@@ -36,7 +36,7 @@ public class GuildOwnerUpdateAgent implements Runnable {
                     continue;
 
                 CommandPermission userPermission =
-                        Main.getController().getUserDataManager().getUserPermission(member);
+                        Main.getController().getUsersTable().getUserPermission(member);
                 if (userPermission.equals(CommandPermission.BOT_OWNER))
                     continue;
 
@@ -50,7 +50,7 @@ public class GuildOwnerUpdateAgent implements Runnable {
                         permission = CommandPermission.USER;
 
                     if (!permission.equals(userPermission))
-                        Main.getController().getUserDataManager().setUserPermission(member, permission);
+                        Main.getController().getUsersTable().setUserPermission(member, permission);
                 } catch (SQLException | IOException e) {
                     log.error("ユーザー情報の更新中にエラーが発生しました。", e);
                 }

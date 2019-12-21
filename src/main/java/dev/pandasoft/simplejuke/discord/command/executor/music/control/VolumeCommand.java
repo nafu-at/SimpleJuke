@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.discord.command.executor.music.control;
 
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
@@ -41,10 +41,10 @@ public class VolumeCommand extends CommandExecutor {
         if (command.getArgs().length != 0) {
             try {
                 int volume = Integer.parseInt(command.getArgs()[0]);
-                GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild());
+                GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild());
                 audioPlayer.setVolume(volume);
                 settings.setVolume(volume);
-                Main.getController().getGuildSettingsManager().saveSettings(command.getGuild(), settings);
+                Main.getController().getGuildSettingsTable().saveSettings(command.getGuild(), settings);
             } catch (NumberFormatException e) {
                 command.getChannel().sendMessage("指定された値が正しくありません！").queue();
             } catch (SQLException | IOException e) {
@@ -53,7 +53,7 @@ public class VolumeCommand extends CommandExecutor {
             }
         }
         command.getChannel().sendMessage("現在の音量は **" +
-                Main.getController().getGuildSettingsManager().loadSettings(command.getGuild()).getVolume() + "%** です。").queue();
+                Main.getController().getGuildSettingsTable().loadSettings(command.getGuild()).getVolume() + "%** です。").queue();
     }
 
     @Override

@@ -20,7 +20,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.event.PlayerEventListenerAdapter;
-import dev.pandasoft.simplejuke.database.entities.RepeatSetting;
+import dev.pandasoft.simplejuke.database.legacy.entities.RepeatSetting;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
 import dev.pandasoft.simplejuke.util.MessageUtil;
 import lavalink.client.player.IPlayer;
@@ -54,7 +54,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
             if (player.getPlayingTrack() == null)
                 player.playTrack(context.getTrack());
             queue.offer(context);
-            if (Main.getController().getGuildSettingsManager().loadSettings(guild).isShuffle())
+            if (Main.getController().getGuildSettingsTable().loadSettings(guild).isShuffle())
                 shuffle();
         } else if (desiredNum == 1 && tracks.size() == 1) {
             queue.offer(context);
@@ -86,7 +86,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
     }
 
     synchronized void skip() {
-        if (Main.getController().getGuildSettingsManager().loadSettings(guild).getRepeat() == RepeatSetting.SINGLE)
+        if (Main.getController().getGuildSettingsTable().loadSettings(guild).getRepeat() == RepeatSetting.SINGLE)
             queue.poll();
         player.stopTrack();
     }
@@ -215,7 +215,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
 
         if (endReason == AudioTrackEndReason.FINISHED || endReason == AudioTrackEndReason.STOPPED) {
             if (latestTrack != null &&
-                    Main.getController().getGuildSettingsManager().loadSettings(guild).getRepeat() == RepeatSetting.SINGLE &&
+                    Main.getController().getGuildSettingsTable().loadSettings(guild).getRepeat() == RepeatSetting.SINGLE &&
                     track.getIdentifier().equals(latestTrack.getTrack().getIdentifier())) {
                 queue.poll();
 
@@ -223,7 +223,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
                 queue.clear();
                 queue.add(latestTrack.makeClone());
                 tracks.forEach(queue::add);
-            } else if (latestTrack != null && Main.getController().getGuildSettingsManager().loadSettings(guild).getRepeat() == RepeatSetting.ALL) {
+            } else if (latestTrack != null && Main.getController().getGuildSettingsTable().loadSettings(guild).getRepeat() == RepeatSetting.ALL) {
                 queue.poll();
                 queue.offer(latestTrack.makeClone());
             } else if (latestTrack != null && track.getIdentifier().equals(latestTrack.getTrack().getIdentifier())) {
@@ -237,7 +237,7 @@ public class SafeTrackManager extends PlayerEventListenerAdapter {
     @Override
     public void onTrackStart(IPlayer player, AudioTrack track) {
         super.onTrackStart(player, track);
-        if (Main.getController().getGuildSettingsManager().loadSettings(guild).isAnnounce())
+        if (Main.getController().getGuildSettingsTable().loadSettings(guild).isAnnounce())
             MessageUtil.sendMessage(guild, "**" + track.getInfo().title + "**の再生を開始します。");
     }
 

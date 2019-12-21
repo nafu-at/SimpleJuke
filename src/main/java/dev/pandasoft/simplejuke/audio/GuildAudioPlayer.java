@@ -100,7 +100,7 @@ public class GuildAudioPlayer {
      * @param targetChannel Botを接続させるチャンネル
      */
     public void joinChannel(VoiceChannel targetChannel) {
-        setVolume(Main.getController().getGuildSettingsManager().loadSettings(guild).getVolume());
+        setVolume(Main.getController().getGuildSettingsTable().loadSettings(guild).getVolume());
         if (link != null) {
             link.connect(targetChannel);
         } else {

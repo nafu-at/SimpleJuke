@@ -24,7 +24,7 @@ basic:
     local:      false
 
   database: # ギルド設定を保存するDatabaseの接続情報を指定します。
-    databaseType: "MARIADB"            # データベースの種類を指定します。 (MARIADB/MYSQL/SQLITE)
+    databaseType: "MARIADB"            # データベースの種類を指定します。 (MARIADB/MYSQL)
     tablePrefix: "sj_"
     address: localhost:3306            # SQLiteを使用する場合は保存したいファイルパスを指定してください。
     database: SimpleJuke

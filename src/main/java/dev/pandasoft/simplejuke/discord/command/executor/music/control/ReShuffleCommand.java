@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.discord.command.executor.music.control;
 
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
@@ -33,7 +33,7 @@ public class ReShuffleCommand extends CommandExecutor {
 
     @Override
     public void onInvoke(BotCommand command) {
-        GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild());
+        GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild());
         GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
         if (settings.isShuffle()) {
             command.getChannel().sendMessage("キューをシャッフルします。").queue();

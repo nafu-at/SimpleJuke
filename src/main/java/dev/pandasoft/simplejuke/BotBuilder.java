@@ -23,10 +23,12 @@ import dev.pandasoft.simplejuke.audio.AudioPlayerRegistry;
 import dev.pandasoft.simplejuke.config.LavalinkConfigSection;
 import dev.pandasoft.simplejuke.config.SimpleJukeConfig;
 import dev.pandasoft.simplejuke.database.DatabaseConnector;
-import dev.pandasoft.simplejuke.database.GuildSettingsTableManager;
-import dev.pandasoft.simplejuke.database.UserDataTableManager;
-import dev.pandasoft.simplejuke.database.entities.GuildSettingsManager;
-import dev.pandasoft.simplejuke.database.entities.UserDataManager;
+import dev.pandasoft.simplejuke.database.data.GuildSettingsTable;
+import dev.pandasoft.simplejuke.database.data.UsersTable;
+import dev.pandasoft.simplejuke.database.legacy.GuildSettingsTableManager;
+import dev.pandasoft.simplejuke.database.legacy.UserDataTableManager;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettingsManager;
+import dev.pandasoft.simplejuke.database.legacy.entities.UserDataManager;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandManager;
 import dev.pandasoft.simplejuke.discord.command.executor.admin.ShutdownCommand;
@@ -70,8 +72,8 @@ import java.util.List;
 public class BotBuilder {
     protected SimpleJukeConfig config = null;
     protected DatabaseConnector databaseConnector = null;
-    protected GuildSettingsManager guildSettingsManager = null;
-    protected UserDataManager userDataManager = null;
+    protected GuildSettingsTable guildSettingsTable = null;
+    protected UsersTable usersTable = null;
 
     protected Thread shutdownHookThread = null;
 
@@ -131,13 +133,13 @@ public class BotBuilder {
         return this;
     }
 
-    public BotBuilder setGuildSettingsManager(GuildSettingsManager guildSettingsManager) {
-        this.guildSettingsManager = guildSettingsManager;
+    public BotBuilder setGuildSettingsTable(GuildSettingsTable guildSettingsTable) {
+        this.guildSettingsTable = guildSettingsTable;
         return this;
     }
 
-    public BotBuilder setUserDataManager(UserDataManager userDataManager) {
-        this.userDataManager = userDataManager;
+    public BotBuilder setUsersTable(UsersTable usersTable) {
+        this.usersTable = usersTable;
         return this;
     }
 
@@ -252,13 +254,12 @@ public class BotBuilder {
             log.info("Database Connection... OK!");
         }
 
-        if (guildSettingsManager == null) {
-            guildSettingsManager = new GuildSettingsManager(new GuildSettingsTableManager(databaseConnector,
-                    config.getBasicConfig().getDatabase().getTablePrefix() + "guild"));
+        if (guildSettingsTable == null) {
+            guildSettingsTable = new GuildSettingsTable(config.getBasicConfig().getDatabase().getTablePrefix(),
+                    databaseConnector);
         }
-        if (userDataManager == null) {
-            userDataManager = new UserDataManager(new UserDataTableManager(databaseConnector,
-                    config.getBasicConfig().getDatabase().getTablePrefix() + "userdata"));
+        if (usersTable == null) {
+            usersTable = new UsersTable(config.getBasicConfig().getDatabase().getTablePrefix(), databaseConnector);
         }
 
         if (shardManager == null) {
@@ -290,13 +291,14 @@ public class BotBuilder {
             log.info("Starting Discord Client...");
         }
 
-
-        while (!shardManager.getStatus(0).equals(JDA.Status.CONNECTED)) {
+        while (!shardManager.getStatus(0).equals(JDA.Status.CONNECTED))
             Thread.sleep(100);
-        }
+
         log.debug("Connection Status: {} (Ping is {}ms)", shardManager.getStatus(0).toString(),
                 shardManager.getShardById(0).getGatewayPing());
         log.info("Discord API Login... OK!");
+
+        // TODO: 2019/11/20 Futureでデータの整合性確認待ちを行う機能を追加
 
         if (commandManager == null) {
             commandManager = new CommandManager(moduleRegistry);
@@ -316,7 +318,7 @@ public class BotBuilder {
         if (hibernatePlayerChecker == null)
             hibernatePlayerChecker = new HibernatePlayerChecker();
 
-        return new BotController(config, databaseConnector, guildSettingsManager, userDataManager, shardManager,
+        return new BotController(config, databaseConnector, guildSettingsTable, usersTable, shardManager,
                 lavalink, commandManager, playerRegistry, moduleRegistry, moduleManager, updateAgent,
                 ownerUpdateAgent, hibernatePlayerChecker);
     }

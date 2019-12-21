@@ -32,10 +32,8 @@ public class DatabaseConnector implements Closeable {
         HikariConfig hconfig = new HikariConfig();
         hconfig.setDriverClassName(databaseType.getJdbcClass());
         hconfig.setJdbcUrl(databaseType.getAddressPrefix() + address + "/" + database);
-        if (!databaseType.equals(DatabaseType.SQLITE)) {
-            hconfig.addDataSourceProperty("user", username);
-            hconfig.addDataSourceProperty("password", password);
-        }
+        hconfig.addDataSourceProperty("user", username);
+        hconfig.addDataSourceProperty("password", password);
         dataSource = new HikariDataSource(hconfig);
     }
 

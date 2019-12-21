@@ -17,7 +17,7 @@
 package dev.pandasoft.simplejuke.discord.handler;
 
 import dev.pandasoft.simplejuke.Main;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.BotCommandParser;
 import dev.pandasoft.simplejuke.util.ExceptionUtil;
@@ -39,7 +39,7 @@ public class MessageReceivedEventHandler extends ListenerAdapter {
             return;
 
         Guild guild = event.getGuild();
-        GuildSettings guildSettings = Main.getController().getGuildSettingsManager().loadSettings(guild);
+        GuildSettings guildSettings = Main.getController().getGuildSettingsTable().loadSettings(guild);
         String prefix = guildSettings.getPrefix();
         BotCommand command = parser.parse(prefix, event);
         if (command == null)
@@ -47,7 +47,7 @@ public class MessageReceivedEventHandler extends ListenerAdapter {
         log.debug("Command Received: {}", command.toString());
 
         if (command.getCommand().getPermission().getPermissionLevel() >
-                Main.getController().getUserDataManager().getUserPermission(event.getGuild().getMember(event.getAuthor())).getPermissionLevel()) {
+                Main.getController().getUsersTable().getUserPermission(event.getGuild().getMember(event.getAuthor())).getPermissionLevel()) {
             event.getChannel().sendMessage("このコマンドを実行するために必要な権限がありません！").queue();
             return;
         }

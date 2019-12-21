@@ -74,7 +74,7 @@ public class UserInfoCommand extends CommandExecutor {
         builder.addField(new MessageEmbed.Field("Account Create",
                 member.getUser().getTimeCreated().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), true));
         builder.addField(new MessageEmbed.Field("Permission",
-                Main.getController().getUserDataManager().getUserPermission(member).name(), true));
+                Main.getController().getUsersTable().getUserPermission(member).name(), true));
         return builder.build();
     }
 

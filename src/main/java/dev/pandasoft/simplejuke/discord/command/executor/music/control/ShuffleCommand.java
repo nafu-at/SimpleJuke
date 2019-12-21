@@ -18,7 +18,7 @@ package dev.pandasoft.simplejuke.discord.command.executor.music.control;
 
 import dev.pandasoft.simplejuke.Main;
 import dev.pandasoft.simplejuke.audio.GuildAudioPlayer;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
@@ -37,7 +37,7 @@ public class ShuffleCommand extends CommandExecutor {
     @Override
     public void onInvoke(BotCommand command) {
         try {
-            GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild());
+            GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild());
             GuildAudioPlayer audioPlayer = Main.getController().getPlayerRegistry().getGuildAudioPlayer(command.getGuild());
             if (settings.isShuffle()) {
                 settings.setShuffle(false);
@@ -47,7 +47,7 @@ public class ShuffleCommand extends CommandExecutor {
                 command.getChannel().sendMessage("キューをシャッフルします。").queue();
                 audioPlayer.shuffle();
             }
-            Main.getController().getGuildSettingsManager().saveSettings(command.getGuild(), settings);
+            Main.getController().getGuildSettingsTable().saveSettings(command.getGuild(), settings);
         } catch (SQLException | IOException e) {
             log.error("ギルド固有設定の保存中にエラーが発生しました。", e);
         }

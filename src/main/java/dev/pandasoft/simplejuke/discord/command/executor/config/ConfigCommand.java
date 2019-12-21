@@ -17,7 +17,7 @@
 package dev.pandasoft.simplejuke.discord.command.executor.config;
 
 import dev.pandasoft.simplejuke.Main;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
@@ -36,7 +36,7 @@ public class ConfigCommand extends CommandExecutor {
 
     @Override
     public void onInvoke(BotCommand command) {
-        GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild());
+        GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild());
         try {
             if (command.getArgs().length == 0) {
                 sendNowSettings(command, settings);
@@ -82,7 +82,7 @@ public class ConfigCommand extends CommandExecutor {
                     break;
             }
 
-            Main.getController().getGuildSettingsManager().saveSettings(command.getGuild(), settings);
+            Main.getController().getGuildSettingsTable().saveSettings(command.getGuild(), settings);
         } catch (SQLException | IOException e) {
             ExceptionUtil.sendStackTrace(command.getGuild(), e, "ギルド固有設定の保存中にエラーが発生しました。");
             log.error("ギルド固有設定の保存中にエラーが発生しました。", e);

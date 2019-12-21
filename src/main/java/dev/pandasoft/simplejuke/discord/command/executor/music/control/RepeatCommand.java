@@ -17,8 +17,8 @@
 package dev.pandasoft.simplejuke.discord.command.executor.music.control;
 
 import dev.pandasoft.simplejuke.Main;
-import dev.pandasoft.simplejuke.database.entities.GuildSettings;
-import dev.pandasoft.simplejuke.database.entities.RepeatSetting;
+import dev.pandasoft.simplejuke.database.legacy.entities.GuildSettings;
+import dev.pandasoft.simplejuke.database.legacy.entities.RepeatSetting;
 import dev.pandasoft.simplejuke.discord.command.BotCommand;
 import dev.pandasoft.simplejuke.discord.command.CommandExecutor;
 import dev.pandasoft.simplejuke.discord.command.CommandPermission;
@@ -38,7 +38,7 @@ public class RepeatCommand extends CommandExecutor {
     public void onInvoke(BotCommand command) {
         if (command.getArgs().length >= 1) {
             try {
-                GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild());
+                GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild());
                 RepeatSetting repeatSetting;
                 switch (command.getArgs()[0].toLowerCase()) {
                     case "all":
@@ -58,7 +58,7 @@ public class RepeatCommand extends CommandExecutor {
                         break;
                 }
                 settings.setRepeat(repeatSetting);
-                Main.getController().getGuildSettingsManager().saveSettings(command.getGuild(), settings);
+                Main.getController().getGuildSettingsTable().saveSettings(command.getGuild(), settings);
                 if (!settings.getRepeat().equals(RepeatSetting.NONE))
                     command.getChannel().sendMessage("リピートを設定しました。").queue();
                 else
@@ -69,7 +69,7 @@ public class RepeatCommand extends CommandExecutor {
                 command.getChannel().sendMessage("値が正しくありません。single, allのどちらかを選択してください").queue();
             }
         } else {
-            GuildSettings settings = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild());
+            GuildSettings settings = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild());
             command.getChannel().sendMessage("現在のリピート設定は**" + settings.getRepeat().toString() + "**です。").queue();
         }
     }

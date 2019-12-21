@@ -40,7 +40,7 @@ public class ListCommand extends CommandExecutor {
         List<AudioTrackContext> tracks = audioPlayer.getQueues();
         if (!tracks.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            int range = Main.getController().getGuildSettingsManager().loadSettings(command.getGuild()).getListRange();
+            int range = Main.getController().getGuildSettingsTable().loadSettings(command.getGuild()).getListRange();
             int page = 1;
 
             if (command.getArgs().length != 0) {
